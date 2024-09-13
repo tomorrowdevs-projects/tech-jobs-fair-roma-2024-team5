@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  username      String   @unique @db.VarChar(50)
+  email         String   @db.VarChar(100)
+  password      String   @db.VarChar(255)
+  createdAt     DateTime @default(now()) @db.Timestamptz()
+  habits        Habit[]
+  notifications Notification[]
+  sharedHabits  SharedHabit[]
+
+  @@map("users")
+}
+
+model Habit {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  name            String    @db.VarChar(100)
+  description     String?   @db.VarChar(300)
+  startDate       DateTime  @db.Date
+  endDate         DateTime? @db.Date
+  targetValue     Int
+  createdAt       DateTime  @default(now()) @db.Timestamptz()
+  user            User      @relation(fields: [userId], references: [id])
+  habitSchedules  HabitSchedule[]
+  sharedHabits    SharedHabit[]
+
+  @@map("habits")
+}
+
+model HabitSchedule {
+  id            Int        @id @default(autoincrement())
+  habitId       Int
+  daily         Boolean    @default(false)
+  dayOfWeek     Int?
+  dayOfMonth    Int?
+  specificDate  DateTime?  @db.Date
+  habit         Habit      @relation(fields: [habitId], references: [id])
+  completions   HabitCompletion[]
+  notifications Notification[]
+
+  @@map("habit_schedule")
+}
+
+model HabitCompletion {
+  id               Int            @id @default(autoincrement())
+  habitScheduleId  Int
+  value            Int
+  completedAt      DateTime       @default(now()) @db.Timestamptz()
+  habitSchedule    HabitSchedule  @relation(fields: [habitScheduleId], references: [id])
+
+  @@map("habit_completions")
+}
+
+model Notification {
+  id               Int              @id @default(autoincrement())
+  userId           Int
+  habitScheduleId  Int?
+  title            String           @db.VarChar(100)
+  message          String           @db.VarChar(300)
+  createdAt        DateTime         @default(now()) @db.Timestamptz()
+  user             User             @relation(fields: [userId], references: [id])
+  habitSchedule    HabitSchedule?   @relation(fields: [habitScheduleId], references: [id])
+
+  @@map("notifications")
+}
+
+model SharedHabit {
+  id               Int      @id @default(autoincrement())
+  habitId          Int
+  sharedWithUserId Int
+  createdAt        DateTime @default(now()) @db.Timestamptz()
+  habit            Habit    @relation(fields: [habitId], references: [id])
+  sharedWithUser   User     @relation(fields: [sharedWithUserId], references: [id])
+
+  @@map("shared_habits")
+}
