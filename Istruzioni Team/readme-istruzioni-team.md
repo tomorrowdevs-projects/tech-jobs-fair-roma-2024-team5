@@ -2,14 +2,14 @@
 
 ## Credenziali
 Le credenziali admin sono condivise e memorizzate in un file .kdbx. (Trovate sul Github sotto /Istruzioni Team) Per accedervi:
-1. Installare KeePassXC (https://keepassxc.org/)
+1. Installare [KeePassXC](https://keepassxc.org/)
 2. Aprire il file .kdbx con KeePassXC
 3. Inserire la password principale fornita separatamente
 
 ## VPN - ZeroTier
 Utilizziamo ZeroTier come nostra VPN. Ecco come configurarla:
 
-1. Scaricare e installare ZeroTier da https://www.zerotier.com/download/
+1. Scaricare e installare ZeroTier da [https://www.zerotier.com/download/](https://www.zerotier.com/download/)
 2. Dopo l'installazione, eseguire ZeroTier One
 3. Fare clic con il tasto destro sull'icona ZeroTier nella barra delle applicazioni
 4. Selezionare "Join Network"
@@ -18,33 +18,24 @@ Utilizziamo ZeroTier come nostra VPN. Ecco come configurarla:
 
 Una volta approvati, sarete connessi alla rete VPN e potrete accedere alle risorse interne.
 
-## Connessione SSH con PuTTY
-
-### Generazione delle chiavi SSH:
-1. Scaricare PuTTYgen
-2. Avviare PuTTYgen
-3. Configurare le impostazioni della chiave:
-   - Type of key to generate: RSA
-   - Number of bits in a generated key: 4096
-4. Cliccare su "Generate"
-5. Muovere il mouse nell'area vuota per generare randomness
-6. Una volta generata la chiave, impostare una passphrase (opzionale ma fortemente consigliato)
-7. Salvare la chiave privata (.ppk) con un nome riconoscibile, ad esempio: "username_chiave_privata.ppk"
-8. Copiare l'intero contenuto del campo "Public key for pasting into OpenSSH authorized_keys file" e salvarlo in un file di testo con estensione .pub, ad esempio: "username_chiave_pubblica.pub"
-9. Inserite la vostra chiave pubblica nella cartella sotto /Istruzioni Team/Chiavi Pubbliche
-
-### Invio della chiave pubblica all'amministratore:
-1. Inviare il file "username_chiave_pubblica.pub" all'amministratore tramite Telegram (@bimbo911)
+### Credenziali:
+1. Le credenziali si trovano nel database con le password.
 
 ### Connessione al server:
 1. Avviare PuTTY
 2. Nel campo "Host Name", inserire l'indirizzo IP del server (10.244.249.37)
-3. Andare su Connection > SSH > Auth
-4. Cliccare su "Browse" e selezionare il file .ppk della vostra chiave privata
-5. Tornare alla schermata principale e salvare la sessione con un nome
-6. Cliccare "Open" per connettersi
+3. Assicurarsi che la porta sia impostata su 22
+4. Andare su Connection > Data
+5. Nel campo "Auto-login username", inserire il vostro nome utente che troverete nel Database
+6. Tornare alla schermata principale e salvare la sessione con un nome (Opzionale)
+7. Cliccare "Open" per connettersi
 
 Al primo collegamento, accettare l'impronta digitale del server.
 
-IMPORTANTE: Non procedere con la connessione finché non avrete ricevuto conferma dall'amministratore che la vostra chiave pubblica è stata autorizzata.
+Quando richiesto, inserire la password fornita dall'amministratore.
 
+### Sicurezza:
+- Non condividete le vostre credenziali con nessuno.
+- Se sospettate che le vostre credenziali siano state compromesse, contattate immediatamente l'amministratore.
+
+Per qualsiasi problema di accesso o domanda sulla sicurezza, contattate l'amministratore (@bimbo911).
