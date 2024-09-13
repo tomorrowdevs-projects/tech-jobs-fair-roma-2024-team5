@@ -13,7 +13,7 @@ Utilizziamo ZeroTier come nostra VPN. Ecco come configurarla:
 2. Dopo l'installazione, eseguire ZeroTier One
 3. Fare clic con il tasto destro sull'icona ZeroTier nella barra delle applicazioni
 4. Selezionare "Join Network"
-5. Inserire l'ID della rete ZeroTier fornito separatamente
+5. Inserire l'ID della rete ZeroTier fornito separatamente (chiedere a @bimbo911)
 6. Attendere l'approvazione dell'amministratore di rete (@bimbo911)
 
 Una volta approvati, sarete connessi alla rete VPN e potrete accedere alle risorse interne.
@@ -31,13 +31,14 @@ Una volta approvati, sarete connessi alla rete VPN e potrete accedere alle risor
 6. Una volta generata la chiave, impostare una passphrase (opzionale ma fortemente consigliato)
 7. Salvare la chiave privata (.ppk) con un nome riconoscibile, ad esempio: "username_chiave_privata.ppk"
 8. Copiare l'intero contenuto del campo "Public key for pasting into OpenSSH authorized_keys file" e salvarlo in un file di testo con estensione .pub, ad esempio: "username_chiave_pubblica.pub"
+9. Inserite la vostra chiave pubblica nella cartella sotto /Istruzioni Team/Chiavi Pubbliche
 
 ### Invio della chiave pubblica all'amministratore:
 1. Inviare il file "username_chiave_pubblica.pub" all'amministratore tramite Telegram (@bimbo911)
 
 ### Connessione al server:
 1. Avviare PuTTY
-2. Nel campo "Host Name", inserire l'indirizzo IP del server
+2. Nel campo "Host Name", inserire l'indirizzo IP del server (10.244.249.37)
 3. Andare su Connection > SSH > Auth
 4. Cliccare su "Browse" e selezionare il file .ppk della vostra chiave privata
 5. Tornare alla schermata principale e salvare la sessione con un nome
