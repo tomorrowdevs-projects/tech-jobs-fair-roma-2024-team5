@@ -8,42 +8,48 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  username      String   @unique @db.VarChar(50)
-  email         String   @db.VarChar(100)
-  password      String   @db.VarChar(255)
-  createdAt     DateTime @default(now()) @db.Timestamptz()
-  habits        Habit[]
-  notifications Notification[]
-  sharedHabits  SharedHabit[]
+  id                      Int            @id @default(autoincrement())
+  username                String         @unique @db.VarChar(50)
+  email                   String         @db.VarChar(100)
+  password                String         @db.VarChar(255)
+  createdAt               DateTime       @default(now()) @db.Timestamptz()
+  habits                  Habit[]
+  notifications           Notification[]
+  sharedHabits            SharedHabit[]
+  notificationPreferences Json?
+  chartPreferences        Json?
 
   @@map("users")
 }
 
 model Habit {
-  id              Int       @id @default(autoincrement())
+  id              Int               @id @default(autoincrement())
   userId          Int
-  name            String    @db.VarChar(100)
-  description     String?   @db.VarChar(300)
-  startDate       DateTime  @db.Date
-  endDate         DateTime? @db.Date
+  name            String            @db.VarChar(100)
+  description     String?           @db.VarChar(300)
+  startDate       DateTime          @db.Date
+  endDate         DateTime?         @db.Date
   targetValue     Int
-  createdAt       DateTime  @default(now()) @db.Timestamptz()
-  user            User      @relation(fields: [userId], references: [id])
+  createdAt       DateTime          @default(now()) @db.Timestamptz()
+  user            User              @relation(fields: [userId], references: [id])
   habitSchedules  HabitSchedule[]
   sharedHabits    SharedHabit[]
+  abitType        String?           @db.VarChar(50)
+  priority        Int @default(0)
+  HabitStatistics HabitStatistics[]
+  HabitTags       HabitTags[]
 
   @@map("habits")
 }
 
 model HabitSchedule {
-  id            Int        @id @default(autoincrement())
+  id            Int               @id @default(autoincrement())
   habitId       Int
-  daily         Boolean    @default(false)
+  daily         Boolean           @default(false)
   dayOfWeek     Int?
   dayOfMonth    Int?
-  specificDate  DateTime?  @db.Date
-  habit         Habit      @relation(fields: [habitId], references: [id])
+  specificDate  DateTime?         @db.Date
+  habit         Habit             @relation(fields: [habitId], references: [id])
   completions   HabitCompletion[]
   notifications Notification[]
 
@@ -51,34 +57,56 @@ model HabitSchedule {
 }
 
 model HabitCompletion {
-  id               Int            @id @default(autoincrement())
-  habitScheduleId  Int
-  value            Int
-  completedAt      DateTime       @default(now()) @db.Timestamptz()
-  habitSchedule    HabitSchedule  @relation(fields: [habitScheduleId], references: [id])
+  id              Int           @id @default(autoincrement())
+  habitScheduleId Int
+  value           Int
+  completedAt     DateTime      @default(now()) @db.Timestamptz()
+  habitSchedule   HabitSchedule @relation(fields: [habitScheduleId], references: [id])
 
   @@map("habit_completions")
 }
 
+model HabitStatistics {
+  id             Int      @id @default(autoincrement())
+  habitId        Int
+  habit          Habit    @relation(fields: [habitId], references: [id])
+  startDate      DateTime @default(now()) @db.Timestamptz()
+  endDate        DateTime
+  completionRate Float
+  streak         Int
+  createdAt      DateTime @default(now()) @db.Timestamptz()
+
+  @@map("habit_statistics")
+}
+
+model HabitTags {
+  id      Int    @id @default(autoincrement())
+  tagName String @db.VarChar(50)
+  habitId Int
+  habit   Habit  @relation(fields: [habitId], references: [id])
+
+  @@map("habit_tags")
+}
+
 model Notification {
-  id               Int              @id @default(autoincrement())
-  userId           Int
-  habitScheduleId  Int?
-  title            String           @db.VarChar(100)
-  message          String           @db.VarChar(300)
-  createdAt        DateTime         @default(now()) @db.Timestamptz()
-  user             User             @relation(fields: [userId], references: [id])
-  habitSchedule    HabitSchedule?   @relation(fields: [habitScheduleId], references: [id])
+  id              Int            @id @default(autoincrement())
+  title           String         @db.VarChar(100)
+  message         String         @db.VarChar(300)
+  createdAt       DateTime       @default(now()) @db.Timestamptz()
+  userId          Int
+  user            User           @relation(fields: [userId], references: [id])
+  habitScheduleId Int?
+  habitSchedule   HabitSchedule? @relation(fields: [habitScheduleId], references: [id])
 
   @@map("notifications")
 }
 
 model SharedHabit {
   id               Int      @id @default(autoincrement())
-  habitId          Int
-  sharedWithUserId Int
   createdAt        DateTime @default(now()) @db.Timestamptz()
+  habitId          Int
   habit            Habit    @relation(fields: [habitId], references: [id])
+  sharedWithUserId Int
   sharedWithUser   User     @relation(fields: [sharedWithUserId], references: [id])
 
   @@map("shared_habits")
