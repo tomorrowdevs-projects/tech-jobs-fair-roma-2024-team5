@@ -3,8 +3,8 @@ import React from 'react';
 function Login() {
   return (
 
-    <div className="container mt-5 card p-3 text-center custom_card">
-      <h4 className="mb-3 font-IBM">Ciao, sei già registrato?</h4>
+    <div className="container mt-5 card p-3 text-center custom_card allinea_div">
+      <h4 className="mb-3 font_IBM">Ciao, sei già registrato?</h4>
       <div className="allinea_div">
         <form>
         <div className="mb-3">
