@@ -9,7 +9,6 @@ export const userRouter = router({
         username: z.string(),
         email: z.string(),
         password: z.string(),
-        createdAt: z.date(),
         notificationPreferences: z.optional(z.any()),
         chartPreferences: z.optional(z.any()),
       })
@@ -39,5 +38,27 @@ export const userRouter = router({
           habits: true,
         },
       });
+    }),
+
+  update: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        notificationPreferences: z.optional(z.any()),
+        chartPreferences: z.optional(z.any()),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return await prisma.user.update({ data: input, where: { id: input.id } });
+    }),
+
+  delete: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return await prisma.user.delete({ where: { id: input.id } });
     }),
 });
