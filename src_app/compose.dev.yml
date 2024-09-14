@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres
+    restart: 'no'
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=my_habix
+    ports:
+      - '5432:5432'
+    expose:
+      - 5432
+  backend:
+    image: node:20
+    restart: 'no'
+    working_dir: '/home/node/backend'
+    ports:
+      - 3001:3001
+      - 5555:5555
+    expose:
+      - 3001
+    volumes:
+      - ./backend:/home/node/backend
+    command: bash -c "npm install; npx prisma generate; npx prisma db push; npx prisma studio & npm run dev;"
+    depends_on:
+      - db
+  frontend:
+    image: node:20    
+    restart: 'no'
+    working_dir: '/home/node/frontend'
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/home/node/frontend
+    command: bash -c "npm install; npm run start"
+    depends_on:
+      - backend
