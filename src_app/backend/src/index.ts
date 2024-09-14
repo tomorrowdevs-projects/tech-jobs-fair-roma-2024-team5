@@ -3,9 +3,11 @@ import cors from 'cors';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { router } from './trpc';
 import { habitRouter } from './routers/habit';
+import { userRouter } from './routers/user';
 
 const appRouter = router({
   habit: habitRouter,
+  user: userRouter
 });
 
 const app = express();

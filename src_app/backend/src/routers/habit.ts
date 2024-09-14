@@ -1,8 +1,6 @@
 import { z } from "zod";
 import { router, publicProcedure } from "../trpc";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../services/prisma";
 
 export const habitRouter = router({
   create: publicProcedure
@@ -33,12 +31,13 @@ export const habitRouter = router({
           name: { contains: input.name ?? "" },
         },
         include: {
-          HabitStatistics: true
+          HabitStatistics: true,
+          HabitTags: true,
         }
       });
     }),
   
-  findOne: publicProcedure
+  findById: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
       return await prisma.habit.findUnique({
@@ -47,6 +46,7 @@ export const habitRouter = router({
         },
         include: {
           HabitStatistics: true,
+          HabitTags: true,
           habitSchedules: {
             include: {
               completions: true
