@@ -11,3 +11,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* styles.css */
+/* styles.css */
+.custom_card {
+  width: 40%;
+  background-color: rgba(238, 201, 228, 0.5); /* Colore di sfondo con opacità */
+  border: none; /* Rimuove tutti i bordi */
+  border-radius: 0; /* Rimuove il border-radius */
+}
+/* styles.css */
+.custom-button {
+  background-color: rgba(149, 16, 172, 0.4); /* Colore di sfondo con opacità del 40% */
+  font-family: 'IBM Plex Mono', monospace; /* Font IBM Plex Mono */
+  font-size: 18px; /* Dimensione del font */
+  color: white; /* Colore del testo */
+  border: none; /* Rimuove i bordi */
+  padding: 10px 20px; /* Padding per il pulsante */
+  cursor: pointer; /* Cambia il cursore quando si passa sopra il pulsante */
+  color: black;
+}
+
+.custom-button:hover {
+  background-color: rgba(149, 16, 172, 0.6); /* Colore di sfondo con opacità del 60% al passaggio del mouse */
+}
+
+.allinea_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.font_IBM{
+  font-family: 'IBM Plex Mono', monospace;
+}
