@@ -4,19 +4,24 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import { router } from './trpc';
 import { habitRouter } from './routers/habit';
 import { userRouter } from './routers/user';
+import cookieParser from 'cookie-parser';
+import { createContext } from './context';
+import { authRouter } from './routers/authRouter';
 
 const appRouter = router({
   habit: habitRouter,
-  user: userRouter
+  user: userRouter,
+  auth: authRouter,
 });
 
 const app = express();
 app.use(cors());
-
+app.use(cookieParser());
 app.use(
   '/trpc',
   trpcExpress.createExpressMiddleware({
     router: appRouter,
+    createContext,
   })
 );
 
@@ -25,3 +30,4 @@ app.listen(3001, () => {
 });
 
 export type AppRouter = typeof appRouter;
+export { appRouter }; // Esporti `appRouter` per usarlo in altri file
