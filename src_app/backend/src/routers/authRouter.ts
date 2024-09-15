@@ -33,7 +33,7 @@ export const authRouter = t.router({
       // Genera un JWT e imposta il cookie
       const token = signJwt(user.id);
       
-      // Assicurati che `ctx.res.cookie` sia disponibile
+      // Si assicura che `ctx.res.cookie` sia disponibile
       if (!ctx.res) {
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Response object not found' });
       }
@@ -42,14 +42,13 @@ export const authRouter = t.router({
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Imposta il flag secure solo in produzione
         sameSite: 'strict', // Impedisce l'invio del cookie in richieste cross-site
-        maxAge: 1000 * 60 * 60 * 24 * 7, // Imposta una scadenza di 7 giorni
+        maxAge: 1000 * 60 * 60 * 24 * 30, // Imposta una scadenza di 7 giorni
       });
 
       return { success: true };
     }),
 
   logout: t.procedure.mutation(async ({ ctx }) => {
-    // Assicurati che `ctx.res.clearCookie` sia disponibile
     if (!ctx.res) {
       throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Response object not found' });
     }

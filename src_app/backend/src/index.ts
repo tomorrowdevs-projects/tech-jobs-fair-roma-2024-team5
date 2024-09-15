@@ -15,7 +15,11 @@ const appRouter = router({
 });
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Aggiungi il tuo frontend URL qui
+  credentials: true, // Assicurati che i cookie possano essere inviati
+}));
+
 app.use(cookieParser());
 app.use(
   '/trpc',

@@ -3,7 +3,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; // Non usare una chiave segreta statica in produzione
 
 export const signJwt = (userId: number) => {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '3h' });
 };
 
 

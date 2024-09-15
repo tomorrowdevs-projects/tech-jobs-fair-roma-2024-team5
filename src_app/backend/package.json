@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tsx watch src .env",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "ts-node prisma/seed/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     "@types/node": "^22.5.4",
     "@types/nodemailer": "^6.4.15",
     "prisma": "^5.19.1",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.1",
     "typescript": "^5.6.2"
   },
