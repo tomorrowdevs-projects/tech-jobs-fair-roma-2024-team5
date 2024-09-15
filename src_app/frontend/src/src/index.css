@@ -1,3 +1,9 @@
+:root {
+  --bs-primary: #4cadfd;
+  --bs-primary-rgb: rgb(76, 173, 253);
+  --bs-secondary: #e69af8;
+  --bs-secondary-rgb: rgb(230, 154, 248);
+}
 
 body {
   margin: 0;

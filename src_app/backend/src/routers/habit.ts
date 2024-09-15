@@ -8,17 +8,18 @@ export const habitRouter = router({
       z.object({
         name: z.string(),
         description: z.optional(z.string()),
-        frequency: z.string(),
-        userId: z.number(),
-        startDate: z.date(),
+        startDate: z.string(),
         endDate: z.optional(z.string()),
         targetValue: z.number(),
         abitType: z.optional(z.string()),
         priority: z.number(),
       })
     )
-    .mutation(async ({ input }) => {
-      return await prisma.habit.create({ data: input });
+    .mutation(async ({ ctx, input }) => {
+      return await prisma.habit.create({ data: {
+        ...input,
+        userId: ctx.userid as number
+      } });
     }),
 
   addCompletion: protectedProcedure

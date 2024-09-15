@@ -1,0 +1,14 @@
+.progress-bar .bar {
+  height: 4px;
+}
+.progress-bar .percentages {
+  font-size: .5rem;
+}
+@media (min-width: 992px) {
+  .progress-bar .percentages {
+    font-size: .875rem;
+  }
+  .progress-bar .bar {
+    height: 8px;
+  }
+}

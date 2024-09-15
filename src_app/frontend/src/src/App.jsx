@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import CreateHabit from "./pages/CreateHabit";
 
 const homeRouter = createBrowserRouter([
   // {
@@ -37,6 +38,10 @@ const homeRouter = createBrowserRouter([
       {
         path: "/home",
         element: <Home></Home>,
+      },
+      {
+        path: "/habits/create",
+        element: <CreateHabit></CreateHabit>,
       },
     ],
   },
