@@ -1,4 +1,4 @@
-import { t } from '../trpc';  // Assicurati che sia il contesto TRPC corretto
+import { protectedProcedure, publicProcedure, t } from '../trpc';  // Assicurati che sia il contesto TRPC corretto
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
@@ -40,6 +40,7 @@ export const authRouter = t.router({
       
       ctx.res.cookie('token', token, {
         httpOnly: true,
+        path: '/',
         secure: process.env.NODE_ENV === 'production', // Imposta il flag secure solo in produzione
         sameSite: 'strict', // Impedisce l'invio del cookie in richieste cross-site
         maxAge: 1000 * 60 * 60 * 24 * 30, // Imposta una scadenza di 7 giorni
@@ -58,4 +59,10 @@ export const authRouter = t.router({
     
     return { success: true };
   }),
+
+  getAuthInfo: protectedProcedure.query(({ ctx }) => {
+    return {
+      userId: ctx.userid
+    }
+  })
 });

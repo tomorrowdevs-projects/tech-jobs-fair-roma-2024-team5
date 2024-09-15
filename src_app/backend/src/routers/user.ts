@@ -1,5 +1,5 @@
 import prisma from "../services/prisma";
-import { publicProcedure, router } from "../trpc";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { z } from "zod";
 
 export const userRouter = router({
@@ -17,7 +17,7 @@ export const userRouter = router({
       return await prisma.user.create({ data: input });
     }),
 
-  find: publicProcedure
+  find: protectedProcedure
     .input(z.object({ username: z.optional(z.string()) }))
     .query(async ({ input }) => {
       return await prisma.user.findMany({
@@ -27,7 +27,7 @@ export const userRouter = router({
       });
     }),
 
-  findById: publicProcedure
+  findById: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
       return await prisma.user.findUnique({
@@ -40,7 +40,7 @@ export const userRouter = router({
       });
     }),
 
-  update: publicProcedure
+  update: protectedProcedure
     .input(
       z.object({
         id: z.number(),
@@ -52,7 +52,7 @@ export const userRouter = router({
       return await prisma.user.update({ data: input, where: { id: input.id } });
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(
       z.object({
         id: z.number(),

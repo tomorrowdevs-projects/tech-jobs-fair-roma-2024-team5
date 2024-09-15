@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, protectedProcedure } from "../trpc";
 import prisma from "../services/prisma";
 
 export const habitRouter = router({
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         name: z.string(),
@@ -21,13 +21,13 @@ export const habitRouter = router({
       return await prisma.habit.create({ data: input });
     }),
 
-  addCompletion: publicProcedure
+  addCompletion: protectedProcedure
     .input(z.object({ habitScheduleId: z.number(), value: z.number() }))
     .mutation(async ({ input }) => {
       return await prisma.habitCompletion.create({ data: input });
     }),
 
-  find: publicProcedure
+  find: protectedProcedure
     .input(z.object({ name: z.optional(z.string()) }))
     .query(async ({ input }) => {
       return await prisma.habit.findMany({
@@ -41,7 +41,7 @@ export const habitRouter = router({
       });
     }),
 
-  findById: publicProcedure
+  findById: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
       return await prisma.habit.findUnique({
@@ -60,7 +60,7 @@ export const habitRouter = router({
       });
     }),
 
-  update: publicProcedure
+  update: protectedProcedure
     .input(
       z.object({
         id: z.number(),
@@ -82,7 +82,7 @@ export const habitRouter = router({
       });
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(
       z.object({
         id: z.number(),

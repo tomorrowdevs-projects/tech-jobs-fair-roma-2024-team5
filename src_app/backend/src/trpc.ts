@@ -3,7 +3,7 @@ import { initTRPC } from '@trpc/server';
 import { TRPCError } from '@trpc/server';
 import { verifyJwt } from './utils/jwt'; // La tua funzione di verifica del JWT
 import { Context } from './context';
-import { JwtPayload } from 'jsonwebtoken'; // Aggiungi se non è già importato
+
 
 export const t = initTRPC.context<Context>().create();
 export const router = t.router;
@@ -30,8 +30,8 @@ const isAuthed = t.middleware(async ({ ctx, next }) => {
     userId = decoded;
   } 
   // Se decoded è un JwtPayload, estrai l'ID utente (ad es., da `sub`)
-  else if (typeof decoded === 'object' && decoded.sub) {
-    userId = decoded.sub as string; // Assicurati che sub sia una stringa
+  else if (typeof decoded === 'object' && decoded.userId) {
+    userId = decoded.userId as string; // Assicurati che sub sia una stringa
   }
 
   if (!userId) {

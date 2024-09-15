@@ -1,64 +1,37 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Usa `useNavigate` per il reindirizzamento
+import React, { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import { Navigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Hook per il reindirizzamento
+  const { authInfo, login } = useContext(AuthContext);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Impedisce il comportamento predefinito del modulo
+  if (!!authInfo) {
+    return <Navigate to="/home"></Navigate>;
+  }
 
-    try {
-      // Invia i dati di login al server
-      const response = await fetch('http://localhost:3001/trpc/auth.login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          input: { 
-            email,
-            password
-          }
-        }),
-        credentials: 'include', 
-      });
-      
+  const onSubmit = (e) => {
+    e.preventDefault();
 
-      // Verifica se la risposta è positiva
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
+    const { email, password } = e.target.elements;
 
-      const data = await response.json();
-
-      if (data.result && data.result.success) {
-        // Reindirizza alla dashboard se il login ha successo
-        navigate('/dashboard');
-      } else {
-        // Gestisci errori di login
-        alert('Invalid credentials');
-      }
-    } catch (error) {
-      console.error('An error occurred:', error);
-      alert('An error occurred during login');
-    }
+    login({
+      email: email.value,
+      password: password.value,
+    });
   };
 
   return (
     <div className="container mt-5 card p-3 text-center custom_card allinea_div">
       <h4 className="mb-3 font_IBM">Ciao, sei già registrato?</h4>
       <div className="allinea_div">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
           <div className="mb-3">
             <input
               type="email"
               className="form-control"
               id="email"
+              name="email"
               placeholder="Inserisci la tua email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -66,9 +39,8 @@ function Login() {
               type="password"
               className="form-control"
               id="password"
-              placeholder="Inserisci la tua password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              placeholder="inserisci la tua password"
             />
           </div>
           <button type="submit" className="btn btn-primary custom-button">
