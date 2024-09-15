@@ -3,7 +3,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Navigate } from "react-router-dom";
 
 function Login() {
-  const { authInfo, login } = useContext(AuthContext) || {};
+  const { authInfo, login } = useContext(AuthContext);
 
   if (!!authInfo) {
     return <Navigate to="/home"></Navigate>;
