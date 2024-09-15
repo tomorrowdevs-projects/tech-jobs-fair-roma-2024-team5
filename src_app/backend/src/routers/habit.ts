@@ -28,16 +28,21 @@ export const habitRouter = router({
     }),
 
   find: protectedProcedure
-    .input(z.object({ name: z.optional(z.string()) }))
-    .query(async ({ input }) => {
+    .input(z.optional(z.object({ name: z.optional(z.string()) })))
+    .query(async ({ ctx, input = {} }) => {
       return await prisma.habit.findMany({
         where: {
           name: { contains: input.name ?? "" },
+          userId: ctx.userid as number,
         },
         include: {
-          HabitStatistics: true,
-          HabitTags: true,
+          habitTags: true,
+          habitStatistics: true,
+          habitSchedules: true
         },
+        orderBy: {
+          startDate: "desc"
+        }
       });
     }),
 
@@ -49,8 +54,8 @@ export const habitRouter = router({
           id: input.id,
         },
         include: {
-          HabitStatistics: true,
-          HabitTags: true,
+          habitStatistics: true,
+          habitTags: true,
           habitSchedules: {
             include: {
               completions: true,

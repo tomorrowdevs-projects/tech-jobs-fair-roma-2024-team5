@@ -36,8 +36,8 @@ model Habit {
   sharedHabits    SharedHabit[]
   abitType        String?           @db.VarChar(50)
   priority        Int @default(0)
-  HabitStatistics HabitStatistics[]
-  HabitTags       HabitTags[]
+  habitStatistics HabitStatistics[]
+  habitTags       HabitTags[]
 
   @@map("habits")
 }

@@ -23,15 +23,15 @@ const isAuthed = t.middleware(async ({ ctx, next }) => {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Invalid token' });
   }
 
-  let userId: string | undefined;
+  let userId: number | undefined;
 
   // Se decoded è una stringa, è già l'ID utente
-  if (typeof decoded === 'string') {
+  if (typeof decoded === 'number') {
     userId = decoded;
   } 
   // Se decoded è un JwtPayload, estrai l'ID utente (ad es., da `sub`)
   else if (typeof decoded === 'object' && decoded.userId) {
-    userId = decoded.userId as string; // Assicurati che sub sia una stringa
+    userId = decoded.userId as number; // Assicurati che sub sia una stringa
   }
 
   if (!userId) {

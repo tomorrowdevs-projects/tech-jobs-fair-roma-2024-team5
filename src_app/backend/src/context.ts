@@ -6,5 +6,5 @@ export function createContext({ req, res }: { req: Request, res: Response }) {
 }
 
 export type Context = inferAsyncReturnType<typeof createContext> & {
-  userid?: string;  // Aggiungi userid come proprietà opzionale
+  userid?: number;  // Aggiungi userid come proprietà opzionale
 };
