@@ -7,6 +7,8 @@ import { userRouter } from './routers/user';
 import cookieParser from 'cookie-parser';
 import { createContext } from './context';
 import { authRouter } from './routers/authRouter';
+import cron from 'node-cron';
+import { sendNotification } from './services/notification';
 
 const appRouter = router({
   habit: habitRouter,
@@ -31,6 +33,12 @@ app.use(
 
 app.listen(3001, () => {
   console.log('Server running on http://localhost:3001');
+});
+
+sendNotification()
+
+cron.schedule('0 8 * * *', () => {
+  sendNotification()
 });
 
 export type AppRouter = typeof appRouter;

@@ -13,13 +13,26 @@ export const habitRouter = router({
         targetValue: z.number(),
         abitType: z.optional(z.string()),
         priority: z.number(),
+        habitSchedules: z.array(z.object({
+          daily: z.boolean(),
+          dayOfWeek: z.number(),
+          dayOfMonth: z.number(),
+          specificDate: z.string().datetime(),
+        })).min(1),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return await prisma.habit.create({ data: {
-        ...input,
-        userId: ctx.userid as number
-      } });
+      return await prisma.habit.create({
+        data: {
+          ...input,
+          habitSchedules: {
+            createMany: {
+              data: input.habitSchedules
+            },
+          },
+          userId: ctx.userid as number,
+        },
+      });
     }),
 
   addCompletion: protectedProcedure
@@ -39,11 +52,11 @@ export const habitRouter = router({
         include: {
           habitTags: true,
           habitStatistics: true,
-          habitSchedules: true
+          habitSchedules: true,
         },
         orderBy: {
-          startDate: "desc"
-        }
+          startDate: "desc",
+        },
       });
     }),
 
