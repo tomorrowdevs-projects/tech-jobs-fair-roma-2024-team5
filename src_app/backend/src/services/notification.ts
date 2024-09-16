@@ -47,7 +47,7 @@ export async function sendNotification() {
   await prisma.notification.createMany({
     data: habitsToNotify.map((schedule) => ({
       title: schedule.habit.name,
-      message: "Remind me!",
+      message: schedule.habit.description ?? '',
       userId: schedule.habit.userId,
       habitScheduleId: schedule.id,
     })),
