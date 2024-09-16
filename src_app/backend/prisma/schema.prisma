@@ -27,7 +27,7 @@ model Habit {
   userId          Int
   name            String            @db.VarChar(100)
   description     String?           @db.VarChar(300)
-  startDate       DateTime          @db.Date
+  startDate       DateTime?          @default(now()) @db.Date
   endDate         DateTime?         @db.Date
   targetValue     Int
   createdAt       DateTime          @default(now()) @db.Timestamptz()

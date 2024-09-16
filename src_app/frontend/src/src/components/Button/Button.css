@@ -1,0 +1,16 @@
+.button-basic {
+  background-color: var(--bs-primary-darker);
+  color: white;
+  transition: background-color .3s ease-in-out;
+  padding: .75rem 1.5rem;
+  border-radius: 50px;
+  border: none;
+  text-decoration: none;
+  height: fit-content;
+}
+.button-basic:hover {
+  background-color: var(--bs-primary);
+}
+.button-basic.small {
+  padding: .5rem 1rem;
+}

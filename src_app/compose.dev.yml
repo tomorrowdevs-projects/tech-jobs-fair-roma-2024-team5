@@ -33,5 +33,7 @@ services:
     volumes:
       - ./frontend/src:/home/node/frontend
     command: bash -c "npm install; npm run start"
+    environment:
+      - MYHABIX_BACKEND_URL=http://backend:3001
     depends_on:
       - backend

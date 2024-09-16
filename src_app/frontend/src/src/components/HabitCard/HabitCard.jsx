@@ -5,7 +5,7 @@ export default function HabitCard({ habit }) {
   const stats = habit.habitStatistics[0];
 
   return (
-    <div className="shadow-sm w-100 p-2 p-lg-3 rounded-3 habit-card">
+    <div className="w-100 p-2 p-lg-3 rounded-3 habit-card">
       <div className="row">
         <div className="col-4 ">
           <div className="bg-light rounded-3 ratio ratio-4x3"></div>

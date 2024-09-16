@@ -3,6 +3,7 @@ import { trpc } from "../lib/trpc";
 import Progress from "../components/Progress/Progress";
 import HabitCard from "../components/HabitCard/HabitCard";
 import { Link } from "react-router-dom";
+import Button from "../components/Button/Button"; 
 
 export default function Dashboard() {
   /**@type {[Awaited<ReturnType<typeof trpc.habit.find.query>>, any]} */
@@ -46,9 +47,12 @@ export default function Dashboard() {
 
   return (
     <div className="p-4 container">
-      <Link className="mb-4" to='/habits/create'>
-        <div className="mr-2 h-4 w-4" /> Aggiungi Abitudine
-      </Link>
+      <div className="mb-4">
+        <Button href='/habits/create'>
+          Aggiungi Abitudine
+        </Button>
+
+      </div>
       <div className="row g-3">
         {habits.map((habit) => {
           if (!habit.habitStatistics.length) {

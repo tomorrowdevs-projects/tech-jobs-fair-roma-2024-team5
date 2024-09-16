@@ -8,16 +8,16 @@ export const habitRouter = router({
       z.object({
         name: z.string(),
         description: z.optional(z.string()),
-        startDate: z.string(),
+        startDate: z.optional(z.string()),
         endDate: z.optional(z.string()),
         targetValue: z.number(),
         abitType: z.optional(z.string()),
         priority: z.number(),
         habitSchedules: z.array(z.object({
           daily: z.boolean(),
-          dayOfWeek: z.number(),
-          dayOfMonth: z.number(),
-          specificDate: z.string().datetime(),
+          dayOfWeek: z.optional(z.number()),
+          dayOfMonth: z.optional(z.number()),
+          specificDate: z.optional(z.string().datetime()),
         })).min(1),
       })
     )
