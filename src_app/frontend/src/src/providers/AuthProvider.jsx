@@ -11,6 +11,7 @@ export default function AuthProvider({children}) {
     try {
       const info = await trpc.auth.getAuthInfo.query();
       setAuthInfo(info);
+      console.log(info);
     }
     catch(ex) {
       setAuthInfo(null);

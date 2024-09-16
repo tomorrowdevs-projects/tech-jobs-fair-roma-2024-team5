@@ -1,6 +1,7 @@
 import prisma from "../services/prisma";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { z } from "zod";
+import bcrypt from 'bcrypt';
 
 export const userRouter = router({
   create: publicProcedure
@@ -14,7 +15,19 @@ export const userRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      return await prisma.user.create({ data: input });
+      // Cripta la password
+      const hashedPassword = await bcrypt.hash(input.password, 10);
+
+      // Crea l'utente con la password criptata
+      return await prisma.user.create({
+        data: {
+          username: input.username,
+          email: input.email,
+          password: hashedPassword,
+          notificationPreferences: input.notificationPreferences,
+          chartPreferences: input.chartPreferences,
+        },
+      });
     }),
 
   find: protectedProcedure
