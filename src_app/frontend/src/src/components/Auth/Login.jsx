@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
   const { authInfo, login } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   if (!!authInfo) {
-    return <Navigate to="/home"></Navigate>;
+    return <Navigate to="/"></Navigate>;
   }
 
   const onSubmit = (e) => {
@@ -23,8 +25,8 @@ function Login() {
   return (
     <div className="container mt-5 card p-3 text-center custom_card allinea_div">
       <h4 className="mb-3 font_IBM">Ciao, sei già registrato?</h4>
-      <div className="allinea_div">
-        <form onSubmit={onSubmit}>
+      <div>
+        <form onSubmit={onSubmit} className="mb-3">
           <div className="mb-3">
             <input
               type="email"
@@ -48,17 +50,19 @@ function Login() {
           </button>
 
           <div className="mt-3">
-            <a href="/auth/register" className="text-decoration-none">Password dimenticata?</a>
+            <a href="" className="text-decoration-none">Password dimenticata?</a>
             <p>Non hai ancora un account?</p>
-            <button
-              type="button"
-              className="btn btn-primary custom-button"
-              onClick={() => navigate('/auth/register')} // Usa `navigate` per il reindirizzamento
-            >
-              Registra il tuo account
-            </button>
+            
           </div>
+          
         </form>
+        <button
+      type="button"
+      className="btn btn-primary custom-button"
+      onClick={() => navigate('/auth/register')}
+    >
+      Registra il tuo account
+    </button>
       </div>
     </div>
   );
