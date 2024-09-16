@@ -15,9 +15,9 @@ export const habitRouter = router({
         priority: z.number(),
         habitSchedules: z.array(z.object({
           daily: z.boolean(),
-          dayOfWeek: z.number(),
-          dayOfMonth: z.number(),
-          specificDate: z.string().datetime(),
+          dayOfWeek: z.optional(z.number()),
+          dayOfMonth: z.optional(z.number()),
+          specificDate: z.optional(z.string().datetime()),
         })).min(1),
       })
     )

@@ -1,0 +1,33 @@
+.habit-datepicker[disabled] {
+  opacity: .5;
+  pointer-events: none;
+}
+.habit-datepicker .react-datepicker__header  {
+  background-color: #fbfbfb;
+}
+.habit-datepicker .react-datepicker__day-name {
+  width: fit-content;
+}
+.habit-datepicker .react-datepicker__day,
+.habit-datepicker .react-datepicker__day-name label  {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.habit-datepicker .react-datepicker__day-name input {
+  display: none;
+}
+.habit-datepicker .react-datepicker__day-name label {
+  border-radius: 50%;
+  transition: all .2s ease-in-out;
+}
+.habit-datepicker .react-datepicker__day-name label:hover {
+  cursor: pointer;
+  background-color: #f3f0f0;
+}
+.habit-datepicker .react-datepicker__day-name input:checked + label {
+  background-color: var(--bs-primary-darker);
+  color: white;
+}
