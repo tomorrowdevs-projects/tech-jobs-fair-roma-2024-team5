@@ -1,6 +1,6 @@
 import { protectedProcedure, publicProcedure, t } from '../trpc';  // Assicurati che sia il contesto TRPC corretto
 import { z } from 'zod';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 import { signJwt } from '../utils/jwt';
 import { TRPCError } from '@trpc/server';

@@ -8,7 +8,7 @@ export const habitRouter = router({
       z.object({
         name: z.string(),
         description: z.optional(z.string()),
-        startDate: z.string(),
+        startDate: z.optional(z.string()),
         endDate: z.optional(z.string()),
         targetValue: z.number(),
         abitType: z.optional(z.string()),

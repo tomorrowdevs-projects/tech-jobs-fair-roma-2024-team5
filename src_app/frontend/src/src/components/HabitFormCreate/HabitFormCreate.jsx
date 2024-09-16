@@ -3,6 +3,7 @@ import { trpc } from "../../lib/trpc";
 import Button from "../Button/Button";
 import HabitDatePicker from "../HabitDatePicker/HabitDatePicker";
 import "./HabitFormCreate.css";
+import CircularCheckBox from "../CircularCheckBox/CircularCheckBox";
 
 export default function HabitFormCreate() {
   const [isDaily, setIsDaily] = useState(false);
@@ -25,8 +26,6 @@ export default function HabitFormCreate() {
       dayOfWeek,
     } = e.target.elements;
 
-    console.log(e.target.elements);
-
     const habitSchedules = [];
 
     if (isDaily) {
@@ -37,18 +36,16 @@ export default function HabitFormCreate() {
       habitSchedules.push(
         ...Array.from(dayOfWeek)
           .filter((radio) => radio.checked)
-          .map((radio) => parseInt(radio.value))
+          .map((radio) => ({ daily: false, dayOfWeek: parseInt(radio.value) }))
       );
-
-      habitSchedules.push()
     }
 
     try {
       await trpc.habit.create.mutate({
         name: name.value,
         description: description.value,
-        startDate: new Date(startDate.value),
-        endDate: new Date(endDate.value),
+        startDate: startDate.value || undefined,
+        endDate: endDate.value || undefined,
         targetValue: parseInt(targetValue.value) || 0,
         abitType: abitType.value,
         priority: parseInt(priority.value) || 0,
@@ -135,12 +132,27 @@ export default function HabitFormCreate() {
           type="checkbox"
         ></input>
         <label htmlFor="daily" className="ms-2">
-          Daily
+          Every day
         </label>
       </div>
 
       <div className="my-5">
-        <HabitDatePicker selectedDates={selectedDates} onChange={onDatePickerChange} disabled={isDaily}></HabitDatePicker>
+        <div className="d-flex">
+          {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map(
+            (day, index) => (
+              <div key={day} className="me-3">
+                <CircularCheckBox
+                  disabled={isDaily}
+                  id={`dayOfWeek${index}`}
+                  name="dayOfWeek"
+                  value={index}
+                >
+                  {day}
+                </CircularCheckBox>
+              </div>
+            )
+          )}
+        </div>
       </div>
 
       <Button>Create</Button>
