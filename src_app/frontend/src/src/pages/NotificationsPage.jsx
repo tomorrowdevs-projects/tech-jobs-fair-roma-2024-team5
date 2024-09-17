@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { trpc } from "../lib/trpc";
 import NotificationCard from "../components/NotificationCard/NotificationCard";
+import BackNavigationLink from "../components/BackNavigationLink/BackNavigationLink";
 
 export default function NotificationsPage() {
   /**@type {[Awaited<ReturnType<typeof trpc.notification.find.query>>, any]} */
@@ -33,12 +34,14 @@ export default function NotificationsPage() {
 
   return (
     <div className="container">
+      <BackNavigationLink href={'/'}></BackNavigationLink>
       <div>
         {notifications.map((notification, index) => (
           <div key={index}>
             <NotificationCard notification={notification} onComplete={readNotification}></NotificationCard>
           </div>
         ))}
+        {!notifications.length && <div className="text-center mt-3">There are no notifications are the moment</div>}
       </div>
     </div>
   );
