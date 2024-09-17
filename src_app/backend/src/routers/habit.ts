@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { router, publicProcedure, protectedProcedure } from "../trpc";
 import prisma from "../services/prisma";
+import { endOfDay, endOfMonth, startOfDay, startOfMonth } from "date-fns";
+import { HabitSchedule } from "@prisma/client";
 
 export const habitRouter = router({
   create: protectedProcedure
@@ -13,12 +15,16 @@ export const habitRouter = router({
         targetValue: z.number(),
         abitType: z.optional(z.string()),
         priority: z.number(),
-        habitSchedules: z.array(z.object({
-          daily: z.boolean(),
-          dayOfWeek: z.optional(z.number()),
-          dayOfMonth: z.optional(z.number()),
-          specificDate: z.optional(z.string().datetime()),
-        })).min(1),
+        habitSchedules: z
+          .array(
+            z.object({
+              daily: z.boolean(),
+              dayOfWeek: z.optional(z.number()),
+              dayOfMonth: z.optional(z.number()),
+              specificDate: z.optional(z.string().datetime()),
+            })
+          )
+          .min(1),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -27,7 +33,15 @@ export const habitRouter = router({
           ...input,
           habitSchedules: {
             createMany: {
-              data: input.habitSchedules
+              data: input.habitSchedules,
+            },
+          },
+          habitStatistics: {
+            create: {
+              streak: 0,
+              completionRate: 0,
+              endDate: endOfDay(new Date()),
+              startDate: startOfDay(new Date()),
             },
           },
           userId: ctx.userid as number,
@@ -38,6 +52,49 @@ export const habitRouter = router({
   addCompletion: protectedProcedure
     .input(z.object({ habitScheduleId: z.number(), value: z.number() }))
     .mutation(async ({ input }) => {
+      const habitSchedule = await prisma.habitSchedule.findUnique({
+        where: { id: input.habitScheduleId },
+        include: {
+          habit: true
+        }
+      });
+
+      if (!habitSchedule) {
+        throw new Error('Habit schedule not found')
+      }
+
+      const { habit, habitId } = habitSchedule;
+
+      const currentStatistics = await prisma.habitStatistics.findFirst({
+        where: {
+          startDate: startOfMonth(new Date()),
+          endDate: endOfMonth(new Date()),
+          habitId,
+        },
+      });
+
+      const streak = (currentStatistics?.streak ?? 0) + input.value
+
+      if (!currentStatistics) {
+        await prisma.habitStatistics.create({
+          data: {
+            streak,
+            completionRate: streak / Math.max(habit.targetValue, 1),
+            habitId,
+            endDate: endOfDay(new Date()),
+            startDate: startOfDay(new Date()),
+          },
+        });
+      } else {
+        await prisma.habitStatistics.update({
+          where: { id: currentStatistics.id },
+          data: {
+            streak,
+            completionRate: streak / Math.max(habit.targetValue, 1),
+          },
+        });
+      }
+
       return await prisma.habitCompletion.create({ data: input });
     }),
 
