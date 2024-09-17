@@ -7,7 +7,7 @@ import Button from "../components/Button/Button";
 
 export default function Dashboard() {
   /**@type {[Awaited<ReturnType<typeof trpc.habit.find.query>>, any]} */
-  const [habits, setHabits] = useState();
+  const [habits, setHabits] = useState([]);
 
   useEffect(() => {
     fetchHabits();
@@ -21,29 +21,6 @@ export default function Dashboard() {
       console.error(ex);
     }
   };
-
-  // const createNewHabit = async () => {
-  //   try {
-  //     const newHabit = await trpc.habit.create.mutate();
-  //     fetchHabits();
-  //   } catch (ex) {
-  //     console.error(ex);
-  //   }
-  // };
-
-  // const getDaysOfWeek = () => {
-  //   const days = ["LUN", "MAR", "MER", "GIO", "VEN", "SAB", "DOM"];
-  //   const today = new Date().getDay();
-  //   const sortedDays = [...days.slice(today), ...days.slice(0, today)];
-  //   return sortedDays.map((day, index) => ({
-  //     day,
-  //     date: new Date(Date.now() + index * 24 * 60 * 60 * 1000).getDate(),
-  //   }));
-  // };
-
-  if (!habits) {
-    return <></>
-  }
 
   return (
     <div className="p-4 container">

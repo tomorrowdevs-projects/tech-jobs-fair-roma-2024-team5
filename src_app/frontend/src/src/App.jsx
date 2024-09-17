@@ -8,6 +8,7 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import CreateHabit from "./pages/CreateHabit";
+import NotificationsPage from "./pages/NotificationsPage";
 
 const homeRouter = createBrowserRouter([
   // {
@@ -42,6 +43,10 @@ const homeRouter = createBrowserRouter([
       {
         path: "/habits/create",
         element: <CreateHabit></CreateHabit>,
+      },
+      {
+        path: "/notifications/",
+        element: <NotificationsPage></NotificationsPage>,
       },
     ],
   },

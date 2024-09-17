@@ -3,6 +3,7 @@ import { router, publicProcedure, protectedProcedure } from "../trpc";
 import prisma from "../services/prisma";
 import { endOfDay, endOfMonth, startOfDay, startOfMonth } from "date-fns";
 import { HabitSchedule } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
 export const habitRouter = router({
   create: protectedProcedure
@@ -60,7 +61,7 @@ export const habitRouter = router({
       });
 
       if (!habitSchedule) {
-        throw new Error('Habit schedule not found')
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Invalid scheduleId' })
       }
 
       const { habit, habitId } = habitSchedule;

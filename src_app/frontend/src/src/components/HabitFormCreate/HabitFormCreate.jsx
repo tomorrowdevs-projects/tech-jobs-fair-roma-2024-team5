@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 import HabitDatePicker from "../HabitDatePicker/HabitDatePicker";
 import "./HabitFormCreate.css";
 import CircularCheckBox from "../CircularCheckBox/CircularCheckBox";
+import { useNavigate } from "react-router-dom";
 
 export default function HabitFormCreate() {
   const [isDaily, setIsDaily] = useState(false);
@@ -11,6 +12,7 @@ export default function HabitFormCreate() {
   const onDatePickerChange = (dates) => {
     setSelectedDates(dates);
   };
+  const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -51,6 +53,8 @@ export default function HabitFormCreate() {
         priority: parseInt(priority.value) || 0,
         habitSchedules,
       });
+
+      navigate("/");
     } catch (ex) {
       console.error(ex);
     }
@@ -100,7 +104,7 @@ export default function HabitFormCreate() {
           className="form-control"
           name="targetValue"
           id="targetValue"
-          type="date"
+          type="number"
         ></input>
       </div>
       <div className="form-group">

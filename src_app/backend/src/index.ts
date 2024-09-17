@@ -9,11 +9,13 @@ import { createContext } from './context';
 import { authRouter } from './routers/authRouter';
 import cron from 'node-cron';
 import { sendNotification } from './services/notification';
+import { notificationRouter } from './routers/notification';
 
 const appRouter = router({
   habit: habitRouter,
   user: userRouter,
   auth: authRouter,
+  notification: notificationRouter
 });
 
 const app = express();
