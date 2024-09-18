@@ -1,0 +1,28 @@
+# Install Node.js 20.x
+FROM node:20.17.0-alpine3.20
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy the application from the host to the container
+# Assuming my_app directory exists in the same directory as the Dockerfile
+COPY backend /app
+COPY frontend/src /tmp/frontend
+
+RUN rm -rf /app/node_modules
+
+RUN npm install
+
+RUN cd /tmp/frontend && rm -rf node_modules && npm i && mv build /app/public && cd /app/ && rm -rf /tmp/*
+
+EXPOSE 3001
+EXPOSE 5555
+
+# Copy any custom entrypoint script if needed (optional, could be removed)
+COPY ./entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+
+# Make sure the script is executable
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Entrypoint to initialize the DB and run the app
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

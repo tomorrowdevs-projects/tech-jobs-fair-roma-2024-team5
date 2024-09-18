@@ -5,6 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tsx watch src .env",
+    "start": "tsx src .env",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "ts-node prisma/seed/seed.ts"
   },

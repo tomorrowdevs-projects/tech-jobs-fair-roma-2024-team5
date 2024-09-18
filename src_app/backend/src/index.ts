@@ -25,6 +25,9 @@ app.use(cors({
 }));
 
 app.use(cookieParser());
+
+app.use(express.static('public'))
+
 app.use(
   '/trpc',
   trpcExpress.createExpressMiddleware({
