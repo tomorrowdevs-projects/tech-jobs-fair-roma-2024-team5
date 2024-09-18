@@ -1,8 +1,4 @@
 import { TRPCError } from '@trpc/server';
-// import { verifyJwt } from '../utils/jwt';
-// import { inferAsyncReturnType } from '@trpc/server';
-// import { createContext } from '../context'; // Assumendo che tu abbia un contesto di tRPC
-
 import { t } from '../trpc'; // Assicurati di avere l'istanza initTRPC
 
 export const isAuthenticated = t.middleware(async ({ ctx, next }) => {

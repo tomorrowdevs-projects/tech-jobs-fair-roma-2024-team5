@@ -18,14 +18,11 @@ const Register = () => {
   // Gestore per la sottomissione del form
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Controllo se le password coincidono
     if (formData.password !== formData.confirmPassword) {
       setError('Le password non coincidono');
       return;
     }
 
-    // Chiamata API per registrare l'utente
     try {
       const response = await fetch('http://localhost:3000/trpc/user.create', {
         method: 'POST',

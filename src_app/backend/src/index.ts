@@ -7,14 +7,16 @@ import { userRouter } from './routers/user';
 import cookieParser from 'cookie-parser';
 import { createContext } from './context';
 import { authRouter } from './routers/authRouter';
+import {resetRouter} from './routers/resetPassword'
 import cron from 'node-cron';
-import { sendNotification } from './services/notification';
+// import { sendNotification } from './services/notification';
 import { notificationRouter } from './routers/notification';
 
 const appRouter = router({
   habit: habitRouter,
   user: userRouter,
   auth: authRouter,
+  resetP: resetRouter,
   notification: notificationRouter
 });
 
@@ -37,10 +39,10 @@ app.listen(3001, () => {
   console.log('Server running on http://localhost:3001');
 });
 
-sendNotification()
+// sendNotification()
 
 cron.schedule('0 8 * * *', () => {
-  sendNotification()
+  // sendNotification()
 });
 
 export type AppRouter = typeof appRouter;

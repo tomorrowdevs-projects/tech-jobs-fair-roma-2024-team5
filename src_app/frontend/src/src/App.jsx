@@ -34,7 +34,7 @@ element: <BaseLayout></BaseLayout>,
         {
           path: "/auth/reset-password",
           element: <PasswordReset />,
-        },
+        }
       ],
     },
     {

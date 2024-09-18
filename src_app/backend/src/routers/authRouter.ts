@@ -1,4 +1,4 @@
-import { protectedProcedure, publicProcedure, t } from '../trpc';  // Assicurati che sia il contesto TRPC corretto
+import { protectedProcedure, publicProcedure, router, t } from '../trpc';  // Assicurati che sia il contesto TRPC corretto
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
@@ -66,3 +66,10 @@ export const authRouter = t.router({
     }
   })
 });
+
+
+export const appRouter = router({
+  auth: authRouter, // Collegamento del router di autenticazione
+});
+
+export type AppRouter = typeof appRouter;

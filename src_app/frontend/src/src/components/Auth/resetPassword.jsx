@@ -6,21 +6,32 @@ const PasswordReset = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
  console.log("esisto")
-  // Usando trpc per chiamare la mutazione
-  const resetPasswordMutation = trpc.auth.resetPassword.useMutation();
-   
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+console.log(email)
+       
     try {
-      // Simula la chiamata all'endpoint
-      await resetPasswordMutation.mutateAsync({ email });
+      const response = await fetch('http://localhost:3000/trpc/resetP.resetPassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email
+        }),
+        
+      });
       setMessage('Password reimpostata con successo! Controlla la tua email per la nuova password.');
       setEmail('');
-    } catch (error) {
-      // Visualizza un messaggio di errore
-      setMessage('Errore durante il reset della password. Riprova più tardi.');
+      if (!response.ok) {
+        throw new Error('Errore durante la registrazione');
+      }
+      const result = await response.json();
+    } catch (ex) {
+      setMessage('Errore durante il reset della password. Riprova più tardi.'+ ex);
     }
+  
   };
 
   return (
