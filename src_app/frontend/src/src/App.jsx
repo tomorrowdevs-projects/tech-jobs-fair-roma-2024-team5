@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
+import PasswordReset from "./components/Auth/resetPassword";
 import Auth from "./pages/Auth";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -25,6 +26,10 @@ const homeRouter = createBrowserRouter([
       {
         path: "/auth/register",
         element: <Register />,
+      },
+      {
+        path: "/auth/reset-password",
+        element: <PasswordReset />,
       },
     ],
   },

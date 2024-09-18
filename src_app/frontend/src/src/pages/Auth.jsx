@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Login from '../components/Auth/Login';
 import Register from '../components/Auth/Register';
 import logo from'../logo.png'
+import PasswordReset from '../components/Auth/resetPassword';
+
 
 function Auth() {
   return (
@@ -15,6 +17,8 @@ function Auth() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/reset-password" element={<PasswordReset />} />
+        
       </Routes>
     </div>
     </>

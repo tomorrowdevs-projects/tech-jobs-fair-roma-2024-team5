@@ -3,6 +3,7 @@ import { initTRPC } from '@trpc/server';
 import { TRPCError } from '@trpc/server';
 import { verifyJwt } from './utils/jwt'; // La tua funzione di verifica del JWT
 import { Context } from './context';
+import superjson from 'superjson';
 
 
 export const t = initTRPC.context<Context>().create();
@@ -46,3 +47,15 @@ const isAuthed = t.middleware(async ({ ctx, next }) => {
 
 export const protectedProcedure = t.procedure.use(isAuthed);
 export const publicProcedure = t.procedure;
+
+const ta = initTRPC.create({
+  transformer: superjson,
+  errorFormatter({ shape }) {
+    return shape;
+  },
+});
+
+// Funzione per creare un router
+export const createRouter = () => {
+  return t.router;
+};
