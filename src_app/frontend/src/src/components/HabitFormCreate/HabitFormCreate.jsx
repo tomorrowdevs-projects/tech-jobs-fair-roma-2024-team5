@@ -106,8 +106,8 @@ export default function HabitFormCreate() {
 
       <div className="form-group">
         <label htmlFor="habitRecurrence">What is the habit recurrence?</label>
-        <select class="form-select" id="habitRecurrence" name="habitRecurrence">
-          <option selected value="daily">Daily</option>
+        <select defaultValue="daily" className="form-select" id="habitRecurrence" name="habitRecurrence">
+          <option value="daily">Daily</option>
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
         </select>

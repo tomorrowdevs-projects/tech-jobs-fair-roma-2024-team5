@@ -66,11 +66,11 @@ export default function HabitCard({ habit, onAddCompletion, onDelete }) {
               <div className="col-12 col-lg-6">
                 <Button>Add Progress</Button>
               </div>
+            </div>
+          </form>
               <div className="col-12">
                 <Button onClick={deleteHabit}>Delete</Button>
               </div>
-            </div>
-          </form>
           </div>
         </div>
       </div>
