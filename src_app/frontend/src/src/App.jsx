@@ -9,6 +9,8 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import CreateHabit from "./pages/CreateHabit";
+import NotificationsPage from "./pages/NotificationsPage";
+import BaseLayout from "./layouts/BaseLayout/BaseLayout";
 
 const homeRouter = createBrowserRouter([
   // {
@@ -16,40 +18,47 @@ const homeRouter = createBrowserRouter([
   //   element: <Home />
   // },
   {
-    path: "/auth",
-    element: <Auth />,
-    children: [
-      {
-        path: "/auth/login",
-        element: <Login />,
-      },
-      {
-        path: "/auth/register",
-        element: <Register />,
-      },
-      {
-        path: "/auth/reset-password",
-        element: <PasswordReset />,
-      },
-    ],
-  },
-  {
-    element: <ProtectedRoute></ProtectedRoute>,
-    children: [
-      {
-        path: "/",
-        element: <Dashboard></Dashboard>,
-      },
-      {
-        path: "/home",
-        element: <Home></Home>,
-      },
-      {
-        path: "/habits/create",
-        element: <CreateHabit></CreateHabit>,
-      },
-    ],
-  },
+element: <BaseLayout></BaseLayout>,
+    children: [{
+      path: "/auth",
+      element: <Auth />,
+      children: [
+        {
+          path: "/auth/login",
+          element: <Login />,
+        },
+        {
+          path: "/auth/register",
+          element: <Register />,
+        },
+        {
+          path: "/auth/reset-password",
+          element: <PasswordReset />,
+        },
+      ],
+    },
+    {
+      element: <ProtectedRoute></ProtectedRoute>,
+      children: [
+        {
+          path: "/",
+          element: <Dashboard></Dashboard>,
+        },
+        {
+          path: "/home",
+          element: <Home></Home>,
+        },
+        {
+          path: "/habits/create",
+          element: <CreateHabit></CreateHabit>,
+        },
+        {
+          path: "/notifications/",
+          element: <NotificationsPage></NotificationsPage>,
+        },
+      ],
+    },]
+  }
 
   // {
   //   path: "/dashboard",
@@ -59,7 +68,11 @@ const homeRouter = createBrowserRouter([
 
 // --open /auth/login
 function App() {
-  return <RouterProvider router={homeRouter} />;
+  return (
+    <>
+      <RouterProvider router={homeRouter} />
+    </>
+  );
 }
 
 export default App;

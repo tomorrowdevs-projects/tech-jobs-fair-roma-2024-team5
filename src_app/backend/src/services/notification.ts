@@ -5,21 +5,15 @@ export async function sendNotification() {
   const today = startOfDay(new Date());
 
   // check for habit schedules to be notified
-  const habitsToNotify = await prisma.habitSchedule.findMany({
-    distinct: "habitId",
+  const habitsToNotify = await prisma.habit.findMany({
     where: {
+      startDate: {lte: new Date()},
       OR: [
+        {endDate: {
+          gte: new Date()
+        },},
         {
-          dayOfWeek: today.getDay(),
-        },
-        {
-          dayOfMonth: today.getDate(),
-        },
-        {
-          daily: true,
-        },
-        {
-          specificDate: today,
+          endDate: null
         }
       ],
       // do not send if action has already been completed
@@ -39,19 +33,16 @@ export async function sendNotification() {
         },
       },
     },
-    include: {
-      habit: true
-    }
   });
   
   await prisma.notification.createMany({
-    data: habitsToNotify.map((schedule) => ({
-      title: schedule.habit.name,
-      message: schedule.habit.description ?? '',
-      userId: schedule.habit.userId,
-      habitScheduleId: schedule.id,
+    data: habitsToNotify.map((habit) => ({
+      habitId: habit.id,
+      title: habit.name,
+      message: habit.description ?? '',
+      userId: habit.userId,
     })),
   });
   
-  console.log(`[notification_service]: sending notifications for habits {${habitsToNotify.map(schedule => schedule.habitId).join(',')}}`);
+  console.log(`[notification_service]: sending notifications for habits {${habitsToNotify.map(habit => habit.id).join(',')}}`);
 }
