@@ -22,6 +22,19 @@ export default function Dashboard() {
     }
   };
 
+  const onAddCompletion = (habit, value) => {
+    const habitStatistics = habits.find(h => h.id === habit.id).habitStatistics[0];
+
+    habitStatistics.streak += value;
+    habitStatistics.completionRate = habitStatistics.streak / Math.max(habit.targetValue)
+
+    setHabits([...habits])
+  }
+
+  const onDelete = (habit) => {
+    setHabits(habits.filter(h => h.id !== habit.id));
+  }
+
   return (
     <div className="p-4 container">
       <div className="mb-4">
@@ -38,7 +51,7 @@ export default function Dashboard() {
 
           return (
             <div key={habit.id} className="col-12">
-              <HabitCard habit={habit}></HabitCard>
+              <HabitCard onAddCompletion={onAddCompletion} onDelete={onDelete} habit={habit}></HabitCard>
             </div>
           );
         })}

@@ -15,27 +15,21 @@ export const habitRouter = router({
         endDate: z.optional(z.string()),
         targetValue: z.number(),
         abitType: z.optional(z.string()),
-        priority: z.number(),
-        habitSchedules: z
-          .array(
-            z.object({
-              daily: z.boolean(),
-              dayOfWeek: z.optional(z.number()),
-              dayOfMonth: z.optional(z.number()),
-              specificDate: z.optional(z.string().datetime()),
-            })
-          )
-          .min(1),
+        priority: z.optional(z.number()),
+        habitSchedule: z.object({
+          daily: z.boolean(),
+          dayOfWeek: z.optional(z.number()),
+          dayOfMonth: z.optional(z.number()),
+          specificDate: z.optional(z.string().datetime()),
+        }),
       })
     )
     .mutation(async ({ ctx, input }) => {
       return await prisma.habit.create({
         data: {
           ...input,
-          habitSchedules: {
-            createMany: {
-              data: input.habitSchedules,
-            },
+          habitSchedule: {
+            create: input.habitSchedule,
           },
           habitStatistics: {
             create: {
@@ -51,30 +45,32 @@ export const habitRouter = router({
     }),
 
   addCompletion: protectedProcedure
-    .input(z.object({ habitScheduleId: z.number(), value: z.number() }))
+    .input(z.object({ habitId: z.number(), value: z.number() }))
     .mutation(async ({ input }) => {
-      const habitSchedule = await prisma.habitSchedule.findUnique({
-        where: { id: input.habitScheduleId },
-        include: {
-          habit: true
-        }
-      });
+      const { habitId } = input;
 
-      if (!habitSchedule) {
-        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Invalid scheduleId' })
+      const habit = await prisma.habit.findUnique({ where: { id: habitId } });
+
+      if (!habit) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invalid habit id",
+        });
       }
-
-      const { habit, habitId } = habitSchedule;
 
       const currentStatistics = await prisma.habitStatistics.findFirst({
         where: {
-          startDate: startOfMonth(new Date()),
-          endDate: endOfMonth(new Date()),
+          startDate: {
+            lte: new Date(),
+          },
+          endDate: {
+            gte: new Date(),
+          },
           habitId,
         },
       });
 
-      const streak = (currentStatistics?.streak ?? 0) + input.value
+      const streak = (currentStatistics?.streak ?? 0) + input.value;
 
       if (!currentStatistics) {
         await prisma.habitStatistics.create({
@@ -110,7 +106,7 @@ export const habitRouter = router({
         include: {
           habitTags: true,
           habitStatistics: true,
-          habitSchedules: true,
+          habitSchedule: true,
         },
         orderBy: {
           startDate: "desc",
@@ -128,11 +124,7 @@ export const habitRouter = router({
         include: {
           habitStatistics: true,
           habitTags: true,
-          habitSchedules: {
-            include: {
-              completions: true,
-            },
-          },
+          habitSchedule: true,
         },
       });
     }),

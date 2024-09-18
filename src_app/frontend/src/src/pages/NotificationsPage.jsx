@@ -20,28 +20,29 @@ export default function NotificationsPage() {
     }
   };
 
-  const readNotification = async (notification) => {
-    try {
-      const { habitScheduleId, id } = notification;
-      await trpc.habit.addCompletion.mutate({ habitScheduleId, value: 1 });
-      await trpc.notification.delete.mutate({ id });
-
-      setNotifications(notifications.filter(n => n.id !== id));
-    } catch (ex) {
-      console.error(ex);
-    }
+  const onRead = (notification) => {
+    setNotifications(notifications.filter((n) => n.id !== notification.id));
   };
 
   return (
     <div className="container">
-      <BackNavigationLink href={'/'}></BackNavigationLink>
+      <div className="mb-5">
+        <BackNavigationLink href={"/"}></BackNavigationLink>
+      </div>
       <div>
         {notifications.map((notification, index) => (
           <div key={index}>
-            <NotificationCard notification={notification} onComplete={readNotification}></NotificationCard>
+            <NotificationCard
+              notification={notification}
+              onRead={onRead}
+            ></NotificationCard>
           </div>
         ))}
-        {!notifications.length && <div className="text-center mt-3">There are no notifications are the moment</div>}
+        {!notifications.length && (
+          <div className="text-center mt-3">
+            There are no notifications are the moment
+          </div>
+        )}
       </div>
     </div>
   );

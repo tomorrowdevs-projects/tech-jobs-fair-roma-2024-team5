@@ -23,35 +23,22 @@ export default function HabitFormCreate() {
       startDate,
       endDate,
       targetValue,
-      abitType,
-      priority,
-      dayOfWeek,
+      habitRecurrence,
     } = e.target.elements;
-
-    const habitSchedules = [];
-
-    if (isDaily) {
-      habitSchedules.push({
-        daily: true,
-      });
-    } else {
-      habitSchedules.push(
-        ...Array.from(dayOfWeek)
-          .filter((radio) => radio.checked)
-          .map((radio) => ({ daily: false, dayOfWeek: parseInt(radio.value) }))
-      );
-    }
 
     try {
       await trpc.habit.create.mutate({
         name: name.value,
         description: description.value,
-        startDate: startDate.value || undefined,
-        endDate: endDate.value || undefined,
+        startDate: new Date(startDate.value) || undefined,
+        endDate: new Date(endDate.value) || undefined,
         targetValue: parseInt(targetValue.value) || 0,
-        abitType: abitType.value,
-        priority: parseInt(priority.value) || 0,
-        habitSchedules,
+        habitSchedule: 
+          {
+            daily: habitRecurrence.value === 'daily',
+            dayOfWeek: habitRecurrence.value === 'weekly' ? (new Date()).getDay() : undefined,
+            dayOfMonth: habitRecurrence.value === 'monthly' ? (new Date()).getMonth() : undefined,
+          }
       });
 
       navigate("/");
@@ -81,23 +68,32 @@ export default function HabitFormCreate() {
         ></textarea>
       </div>
       <div className="form-group">
-        <label htmlFor="startDate">Start Date</label>
-        <input
-          className="form-control"
-          name="startDate"
-          id="startDate"
-          type="date"
-        ></input>
+        <div className="row">
+          <div className="col-12 col-lg-6">
+            <div className="form-group">
+              <label htmlFor="startDate">Start Date</label>
+              <input
+                className="form-control"
+                name="startDate"
+                id="startDate"
+                type="date"
+              ></input>
+            </div>
+          </div>
+          <div className="col-12 col-lg-6">
+            <div className="form-group">
+              <label htmlFor="endDate">End Date</label>
+              <input
+                className="form-control"
+                name="endDate"
+                id="endDate"
+                type="date"
+              ></input>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="form-group">
-        <label htmlFor="endDate">End Date</label>
-        <input
-          className="form-control"
-          name="endDate"
-          id="endDate"
-          type="date"
-        ></input>
-      </div>
+
       <div className="form-group">
         <label htmlFor="targetValue">Target Value</label>
         <input
@@ -107,56 +103,14 @@ export default function HabitFormCreate() {
           type="number"
         ></input>
       </div>
-      <div className="form-group">
-        <label htmlFor="abitType">Abit Type</label>
-        <input
-          className="form-control"
-          name="abitType"
-          id="abitType"
-          type="text"
-        ></input>
-      </div>
-      <div className="form-group">
-        <label htmlFor="priority">Priority</label>
-        <input
-          className="form-control"
-          name="priority"
-          id="priority"
-          type="number"
-        ></input>
-      </div>
 
       <div className="form-group">
-        <input
-          value="true"
-          onChange={(e) => setIsDaily(e.target.checked)}
-          className="form-check-input"
-          name="daily"
-          id="daily"
-          type="checkbox"
-        ></input>
-        <label htmlFor="daily" className="ms-2">
-          Every day
-        </label>
-      </div>
-
-      <div className="my-5">
-        <div className="d-flex">
-          {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map(
-            (day, index) => (
-              <div key={day} className="me-3">
-                <CircularCheckBox
-                  disabled={isDaily}
-                  id={`dayOfWeek${index}`}
-                  name="dayOfWeek"
-                  value={index}
-                >
-                  {day}
-                </CircularCheckBox>
-              </div>
-            )
-          )}
-        </div>
+        <label htmlFor="habitRecurrence">What is the habit recurrence?</label>
+        <select class="form-select" id="habitRecurrence" name="habitRecurrence">
+          <option selected value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
       </div>
 
       <Button>Create</Button>
