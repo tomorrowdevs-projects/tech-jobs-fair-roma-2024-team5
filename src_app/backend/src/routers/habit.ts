@@ -158,6 +158,13 @@ export const habitRouter = router({
       })
     )
     .mutation(async ({ input }) => {
+      const {id} = input;
+
+      await prisma.notification.deleteMany({where: {habitId: id}});
+      await prisma.habitCompletion.deleteMany({where: {habitId: id}});
+      await prisma.habitStatistics.deleteMany({where: {habitId: id}});
+      await prisma.habitSchedule.deleteMany({where: {habitId: id}});
+
       return await prisma.habit.delete({ where: { id: input.id } });
     }),
 });
