@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { trpc } from "../../lib/trpc";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [error, setError] = useState(null); // Stato per gestire errori
   const [success, setSuccess] = useState(false); // Stato per gestire successi
@@ -19,41 +20,29 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      setError('Le password non coincidono');
+      setError("Le password non coincidono");
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:3000/trpc/user.create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        }),
+      await trpc.user.create.mutate({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
       });
-
-      if (!response.ok) {
-        throw new Error('Errore durante la registrazione');
-      }
-
-      const result = await response.json();
 
       setSuccess(true); // Imposta il successo
       setError(null); // Resetta gli errori
 
       // Resetta i campi del form
       setFormData({
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
       });
     } catch (ex) {
-      setError('Errore durante la registrazione. Riprova.'); // Imposta l'errore
+      setError("Errore durante la registrazione. Riprova."); // Imposta l'errore
       setSuccess(false);
     }
   };
@@ -66,7 +55,9 @@ const Register = () => {
       {error && <p className="text-red-500">{error}</p>}
 
       {/* Mostra il messaggio di successo */}
-      {success && <p className="text-green-500">Registrazione avvenuta con successo!</p>}
+      {success && (
+        <p className="text-green-500">Registrazione avvenuta con successo!</p>
+      )}
 
       <div className="allinea_div">
         <form onSubmit={handleSubmit} className="space-y-4">
