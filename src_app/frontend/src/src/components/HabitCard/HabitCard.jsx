@@ -61,15 +61,15 @@ export default function HabitCard({ habit, onAddCompletion, onDelete }) {
           <form onSubmit={addCompletion}>
             <div className="row">
               <div className="col-12 col-lg-6">
-                <input type="number" name="completionValue" id="completionValue"></input>
+                <input max={999999} min={0} type="number" name="completionValue" id="completionValue"></input>
               </div>
               <div className="col-12 col-lg-6">
-                <Button>Add Progress</Button>
+                <Button>Aggiungi avanzamento</Button>
               </div>
             </div>
           </form>
               <div className="col-12">
-                <Button onClick={deleteHabit}>Delete</Button>
+                <Button onClick={deleteHabit}>Elimina</Button>
               </div>
           </div>
         </div>

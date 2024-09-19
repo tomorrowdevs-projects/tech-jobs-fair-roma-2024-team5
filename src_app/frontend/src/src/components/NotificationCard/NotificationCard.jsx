@@ -20,7 +20,7 @@ export default function NotificationCard({notification, onRead}) {
     <div className="notification-card">
       <h3 className="title">{notification.title}</h3>
       <p>{notification.message}</p>
-      <Button onClick={readNotification} >Completed</Button>
+      <Button onClick={readNotification} >Letta</Button>
     </div>
   );
 }
