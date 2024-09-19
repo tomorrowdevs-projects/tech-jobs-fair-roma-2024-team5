@@ -1,3 +1,88 @@
-.form-group:not(:last-child) {
-  margin-bottom: 24px;
+.habit-form-create {
+  background: #f0f0f0;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.date-group {
+  display: flex;
+  gap: 20px;
+}
+
+.date-input {
+  flex: 1;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.habit-input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #e0e0e0;
+  box-shadow: inset 2px 2px 5px #b8b8b8, inset -2px -2px 5px #ffffff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.habit-input:focus {
+  outline: none;
+  box-shadow: inset 4px 4px 8px #b8b8b8, inset -4px -4px 8px #ffffff;
+}
+
+.habit-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.habit-button-primary {
+  background: #4cadfd;
+  color: white;
+  box-shadow: 3px 3px 6px #b8b8b8, -3px -3px 6px #ffffff;
+}
+
+.habit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 8px #b8b8b8, -4px -4px 8px #ffffff;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .habit-form-create {
+    padding: 20px;
+  }
+
+  .date-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .habit-input, .habit-button {
+    font-size: 14px;
+    padding: 10px;
+  }
 }

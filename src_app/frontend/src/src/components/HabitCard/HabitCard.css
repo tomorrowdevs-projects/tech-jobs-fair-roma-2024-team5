@@ -1,12 +1,81 @@
 .habit-card {
-  transition: all .3s ease-in-out;
-  box-shadow: var(--bs-box-shadow-sm);
+  background: #f0f0f0;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff;
+  transition: all 0.3s ease;
 }
-.habit-card .title {
-  font-size: 1rem;
+
+.habit-card:hover {
+  transform: translateY(-5px);
 }
-@media (min-width: 992px) {
-  .habit-card .title {
-    font-size: 1.75rem;
+
+.habit-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.habit-progress {
+  margin-bottom: 20px;
+}
+
+.habit-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.habit-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #e0e0e0;
+  box-shadow: inset 2px 2px 5px #b8b8b8, inset -2px -2px 5px #ffffff;
+}
+
+.habit-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.habit-button-primary {
+  background: #4cadfd;
+  color: white;
+  box-shadow: 3px 3px 6px #b8b8b8, -3px -3px 6px #ffffff;
+}
+
+.habit-button-secondary {
+  background: #e69af8;
+  color: white;
+  box-shadow: 3px 3px 6px #b8b8b8, -3px -3px 6px #ffffff;
+}
+
+.habit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 8px #b8b8b8, -4px -4px 8px #ffffff;
+}
+
+@media (max-width: 768px) {
+  .habit-card {
+    padding: 15px;
+  }
+
+  .habit-title {
+    font-size: 1.3rem;
+  }
+
+  .habit-form {
+    flex-direction: column;
+  }
+
+  .habit-input, .habit-button {
+    width: 100%;
   }
 }
