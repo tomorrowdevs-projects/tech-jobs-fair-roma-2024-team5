@@ -1,0 +1,42 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay semi-trasparente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #f0f0f0; /* Sfondo opaco coerente con il login e register */
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff; /* Aggiungi ombra per coerenza */
+  }
+  
+  .modal-content p {
+    color: #333; /* Cambia il colore del testo in nero */
+    margin-bottom: 15px;
+    background-color: #fff; /* Sfondo bianco per il testo */
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .modal-close-button {
+    background-color: #4cadfd;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .modal-close-button:hover {
+    background-color: #3b99e0;
+  }

@@ -1,11 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
+import SuccessModal from "./SuccessModal";
 
 function Login() {
   const { authInfo, login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('registered') === 'true') {
+      setShowSuccessModal(true);
+      // Rimuovi il parametro dall'URL
+      navigate('/auth/login', { replace: true });
+    }
+  }, [location, navigate]);
 
   if (!!authInfo) {
     return <Navigate to="/"></Navigate>;
@@ -22,6 +34,10 @@ function Login() {
 
   return (
     <div className="login-container">
+      <SuccessModal 
+        isOpen={showSuccessModal} 
+        onClose={() => setShowSuccessModal(false)} 
+      />
       <form onSubmit={onSubmit} className="login-form">
         <h2 className="login-title">Accedi al tuo account</h2>
         <div className="form-group">

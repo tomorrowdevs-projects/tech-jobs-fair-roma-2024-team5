@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { trpc } from "../../lib/trpc";
+import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -31,6 +33,9 @@ const Register = () => {
         email: formData.email,
         password: formData.password,
       });
+
+      // Reindirizza alla pagina di login con un parametro di successo
+      navigate('/auth/login?registered=true');
 
       setSuccess(true); // Imposta il successo
       setError(null); // Resetta gli errori
