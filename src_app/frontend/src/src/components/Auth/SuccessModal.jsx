@@ -6,9 +6,11 @@ const SuccessModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
-        <p><strong>Registrazione avvenuta con successo! Ora puoi accedere.</strong></p>
-        <button onClick={onClose} className="modal-close-button">Chiudi</button>
+      <div className="c">
+        <div className="modal-content">
+          <p><strong>Registrazione avvenuta con successo! Ora puoi accedere.</strong></p>
+          <button onClick={onClose} className="modal-close-button">Chiudi</button>
+        </div>
       </div>
     </div>
   );

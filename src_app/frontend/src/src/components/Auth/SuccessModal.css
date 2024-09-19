@@ -6,15 +6,19 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5); /* Overlay semi-trasparente */
     display: flex;
-    align-items: center;
+    align-items: center; border-radius: 10px; 
     justify-content: center;
+    
     z-index: 1000;
   }
-  
+  .c {
+    background-color: #fff;
+   /* Arrotonda i bordi del contenitore */
+  }
   .modal-content {
     background-color: #f0f0f0; /* Sfondo opaco coerente con il login e register */
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px; /* Arrotonda i bordi del contenitore */
     text-align: center;
     box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff; /* Aggiungi ombra per coerenza */
   }
@@ -32,7 +36,7 @@
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 10px; /* Arrotonda i bordi del pulsante */
     cursor: pointer;
     font-weight: bold;
   }
