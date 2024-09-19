@@ -11,6 +11,9 @@ import {resetRouter} from './routers/resetPassword'
 import cron from 'node-cron';
 // import { sendNotification } from './services/notification';
 import { notificationRouter } from './routers/notification';
+import path from 'path';
+import { cwd, send } from 'process';
+import { sendNotification } from './services/notification';
 
 const appRouter = router({
   habit: habitRouter,
@@ -38,14 +41,17 @@ app.use(
   })
 );
 
+// Handle all other routes by serving index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(cwd(), 'public', 'index.html'));
+});
+
 app.listen(3001, () => {
   console.log('Server running on http://localhost:3001');
 });
 
-// sendNotification()
-
-cron.schedule('0 8 * * *', () => {
-  // sendNotification()
+cron.schedule('* * * * *', () => {
+  sendNotification()
 });
 
 export type AppRouter = typeof appRouter;

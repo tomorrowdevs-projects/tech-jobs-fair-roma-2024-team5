@@ -14,7 +14,7 @@ export default function Dashboard() {
 
   const fetchHabits = async () => {
     try {
-      const allHabits = await trpc.habit.find.query({ active: true });
+      const allHabits = await trpc.habit.find.query({ active: false });
       setHabits(allHabits);
     } catch (ex) {
       console.error(ex);

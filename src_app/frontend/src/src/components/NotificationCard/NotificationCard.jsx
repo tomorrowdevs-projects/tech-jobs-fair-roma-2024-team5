@@ -5,8 +5,7 @@ import './NotificationCard.css'
 export default function NotificationCard({notification, onRead}) {
   const readNotification = async () => {
     try {
-      const { habitId, id } = notification;
-      await trpc.habit.addCompletion.mutate({ habitId, value: 1 });
+      const { id } = notification;
       await trpc.notification.delete.mutate({ id });
 
       onRead(notification)
