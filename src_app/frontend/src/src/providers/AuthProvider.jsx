@@ -18,6 +18,15 @@ export default function AuthProvider({children}) {
     }
   }
 
+  const logout = useCallback(async () => {
+    try {
+      await trpc.auth.logout.mutate();
+      setAuthInfo(null);
+    } catch (ex) {
+      console.error(ex);
+    }
+  }, [])
+
   const login = useCallback(async ({email, password}) => {
     try {
       await trpc.auth.login.mutate({email, password})
@@ -36,5 +45,5 @@ export default function AuthProvider({children}) {
     fetchAuthInfo()
   }, [authInfo])
 
-  return <AuthContext.Provider value={{authInfo, login}}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{authInfo, login, logout}}>{children}</AuthContext.Provider>
 }

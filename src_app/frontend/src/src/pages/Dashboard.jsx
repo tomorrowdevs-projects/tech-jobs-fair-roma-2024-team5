@@ -36,7 +36,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container container">
       <h1 className="dashboard-title">Le tue abitudini</h1>
       <Link to="/habits/create" className="add-habit-button">
         Aggiungi Abitudine
