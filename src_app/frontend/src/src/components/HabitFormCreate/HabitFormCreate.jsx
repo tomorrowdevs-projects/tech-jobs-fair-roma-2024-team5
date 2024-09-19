@@ -152,34 +152,18 @@ export default function HabitFormCreate() {
             type="date"
           />
           {errors.startDate && <div className="error-message">{errors.startDate}</div>}
-      <div className="form-group">
-        <div className="row">
-          <div className="col-12 col-lg-6">
-            <div className="form-group">
-              <label htmlFor="startDate">Data inizio</label>
-              <input
-                data-required onChange={revalidate}
-                className="form-control"
-                name="startDate"
-                id="startDate"
-                type="date"
-              ></input>
-              {errors.startDate && <div className="text-danger">{errors.startDate}</div>}
-            </div>
-          </div>
-          <div className="col-12 col-lg-6">
-            <div className="form-group">
-              <label htmlFor="endDate">Data fine</label>
-              <input
-                data-required onChange={revalidate}
-                className="form-control"
-                name="endDate"
-                id="endDate"
-                type="date"
-              ></input>
-              {errors.endDate && <div className="text-danger">{errors.endDate}</div>}
-            </div>
-          </div>
+        </div>
+
+        <div className="date-input">
+          <label htmlFor="endDate">Data fine</label>
+          <input
+            data-required onChange={revalidate}
+            className="habit-input"
+            name="endDate"
+            id="endDate"
+            type="date"
+          />
+          {errors.endDate && <div className="error-message">{errors.endDate}</div>}
         </div>
       </div>
 
@@ -187,23 +171,22 @@ export default function HabitFormCreate() {
         <label htmlFor="targetValue">Obiettivo</label>
         <input
           data-required onChange={revalidate}
-          className="form-control"
+          className="habit-input"
           name="targetValue"
           id="targetValue"
           type="number"
           min={1}
           max={999999}
-        ></input>
-        {errors.targetValue && <div className="text-danger">{errors.targetValue}</div>}
+          placeholder="Inserisci il tuo obiettivo"
+        />
+        {errors.targetValue && <div className="error-message">{errors.targetValue}</div>}
       </div>
 
       <div className="form-group">
-        <label htmlFor="habitRecurrence">
-          Con quale frequenza vuoi effettuare questa abitudine?
-        </label>
+        <label htmlFor="habitRecurrence">Frequenza</label>
         <select
           defaultValue="daily"
-          className="form-select"
+          className="habit-input"
           id="habitRecurrence"
           name="habitRecurrence"
         >
@@ -211,10 +194,10 @@ export default function HabitFormCreate() {
           <option value="weekly">Settimanale</option>
           <option value="monthly">Mensile</option>
         </select>
-        {errors.habitRecurrence && <div className="text-danger">{errors.habitRecurrence}</div>}
+        {errors.habitRecurrence && <div className="error-message">{errors.habitRecurrence}</div>}
       </div>
 
-      <Button>Crea</Button>
+      <button type="submit" className="habit-button habit-button-primary">Crea</button>
     </form>
   );
 }
