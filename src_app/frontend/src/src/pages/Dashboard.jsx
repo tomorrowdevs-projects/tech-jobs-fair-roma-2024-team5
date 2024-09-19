@@ -47,8 +47,7 @@ export default function Dashboard() {
           <Spinner></Spinner>
           </div>}
       <div className="habits-grid">
-        {habits.map((habit) => {
-          console.log(habit);
+        {!!habits && habits.map((habit) => {
           if (!habit.habitStatistics.length) {
             return null;
           }
