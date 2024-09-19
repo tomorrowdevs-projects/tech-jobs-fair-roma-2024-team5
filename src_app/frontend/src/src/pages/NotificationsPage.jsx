@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { trpc } from "../lib/trpc";
 import NotificationCard from "../components/NotificationCard/NotificationCard";
 import BackNavigationLink from "../components/BackNavigationLink/BackNavigationLink";
+import Spinner from "../components/Spinner/Spinner";
 
 export default function NotificationsPage() {
   /**@type {[Awaited<ReturnType<typeof trpc.notification.find.query>>, any]} */
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState();
 
   useEffect(() => {
     fetchNotifications();
@@ -30,7 +31,10 @@ export default function NotificationsPage() {
         <BackNavigationLink href={"/"}></BackNavigationLink>
       </div>
       <div>
-        {notifications.map((notification, index) => (
+      {!notifications && <div className="d-flex justify-content-center w-100 mx-auto" style={{maxWidth: 200}}>
+          <Spinner></Spinner>
+          </div>}
+        {!!notifications && notifications.map((notification, index) => (
           <div key={index}>
             <NotificationCard
               notification={notification}
@@ -38,7 +42,7 @@ export default function NotificationsPage() {
             ></NotificationCard>
           </div>
         ))}
-        {!notifications.length && (
+        {!!notifications && !notifications.length && (
           <div className="text-center mt-3">
             Non ci sono notifiche al momento
           </div>
