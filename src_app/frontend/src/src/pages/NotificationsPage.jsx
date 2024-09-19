@@ -40,7 +40,7 @@ export default function NotificationsPage() {
         ))}
         {!notifications.length && (
           <div className="text-center mt-3">
-            There are no notifications are the moment
+            Non ci sono notifiche al momento
           </div>
         )}
       </div>
