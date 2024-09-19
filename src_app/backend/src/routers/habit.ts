@@ -44,7 +44,7 @@ export const habitRouter = router({
       });
     }),
 
-  addCompletion: protectedProcedure
+  updateProgress: protectedProcedure
     .input(z.object({ habitId: z.number(), value: z.number() }))
     .mutation(async ({ input }) => {
       const { habitId } = input;
@@ -70,7 +70,8 @@ export const habitRouter = router({
         },
       });
 
-      const streak = (currentStatistics?.streak ?? 0) + input.value;
+      // value might be negative, avoid streak to go under 0
+      const streak = Math.max(input.value, 0)
 
       if (!currentStatistics) {
         await prisma.habitStatistics.create({

@@ -3,9 +3,10 @@ import { trpc } from "../lib/trpc";
 import HabitCard from "../components/HabitCard/HabitCard";
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
+import Spinner from "../components/Spinner/Spinner";
 
 export default function Dashboard() {
-  const [habits, setHabits] = useState([]);
+  const [habits, setHabits] = useState();
 
   useEffect(() => {
     fetchHabits();
@@ -13,7 +14,7 @@ export default function Dashboard() {
 
   const fetchHabits = async () => {
     try {
-      const allHabits = await trpc.habit.find.query({ active: true });
+      const allHabits = await trpc.habit.find.query({ active: false });
       setHabits(allHabits);
       console.log(allHabits);
     } catch (ex) {
@@ -21,11 +22,11 @@ export default function Dashboard() {
     }
   };
 
-  const onAddCompletion = (habit, value) => {
+  const onUpdateProgress = (habit, value) => {
     const habitStatistics = habits.find((h) => h.id === habit.id)
       .habitStatistics[0];
 
-    habitStatistics.streak += value;
+    habitStatistics.streak = Math.max(value, 0);
     habitStatistics.completionRate =
       habitStatistics.streak / Math.max(habit.targetValue);
     console.log(habits);
@@ -37,11 +38,14 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container container">
       <h1 className="dashboard-title">Le tue abitudini</h1>
       <Link to="/habits/create" className="add-habit-button">
         Aggiungi Abitudine
       </Link>
+        {!habits && <div className="d-flex justify-content-center w-100 mx-auto" style={{maxWidth: 200}}>
+          <Spinner></Spinner>
+          </div>}
       <div className="habits-grid">
         {habits.map((habit) => {
           console.log(habit);
@@ -51,14 +55,14 @@ export default function Dashboard() {
           return (
             <HabitCard
               key={habit.id}
-              onAddCompletion={onAddCompletion}
+              onUpdateProgress={onUpdateProgress}
               onDelete={onDelete}
               habit={habit}
             />
           );
         })}
       </div>
-      {habits.length === 0 && (
+      {!!habits && habits.length === 0 && (
         <p className="no-habits-message">Non hai ancora aggiunto abitudini. Inizia ora!</p>
       )}
     </div>
