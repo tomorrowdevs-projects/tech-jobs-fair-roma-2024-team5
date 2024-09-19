@@ -9,6 +9,7 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -23,13 +24,19 @@ function Login() {
     return <Navigate to="/"></Navigate>;
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
     const { email, password } = e.target.elements;
-    login({
+    const result = await login({
       email: email.value,
       password: password.value,
     });
+
+    if (!result) {
+      setError("Credenziali non valide. Per favore, riprova.");
+      console.log("tutto sbagliato");
+    }
   };
 
   return (
@@ -40,6 +47,7 @@ function Login() {
       />
       <form onSubmit={onSubmit} className="login-form">
         <h2 className="login-title">Accedi al tuo account</h2>
+        {error && <div className="error-message">{error}</div>}
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input

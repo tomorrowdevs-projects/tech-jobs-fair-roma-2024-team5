@@ -15,6 +15,7 @@ export default function Dashboard() {
     try {
       const allHabits = await trpc.habit.find.query({ active: true });
       setHabits(allHabits);
+      console.log(allHabits);
     } catch (ex) {
       console.error(ex);
     }
@@ -27,7 +28,7 @@ export default function Dashboard() {
     habitStatistics.streak += value;
     habitStatistics.completionRate =
       habitStatistics.streak / Math.max(habit.targetValue);
-
+    console.log(habits);
     setHabits([...habits]);
   };
 
@@ -43,10 +44,10 @@ export default function Dashboard() {
       </Link>
       <div className="habits-grid">
         {habits.map((habit) => {
+          console.log(habit);
           if (!habit.habitStatistics.length) {
             return null;
           }
-
           return (
             <HabitCard
               key={habit.id}

@@ -109,14 +109,14 @@ export const habitRouter = router({
         where: {
           name: { contains: input.name ?? "" },
           userId: ctx.userid as number,
-          ...(!input.active ? {} : {
-            startDate: {
-              lte: new Date()
-            },
-            endDate: {
-              gte: new Date()
-            }
-          })
+          // ...(!input.active ? {} : {
+          //   startDate: {
+          //     lte: new Date()
+          //   },
+          //   endDate: {
+          //     gte: new Date()
+          //   }
+          // })
         },
         include: {
           habitTags: true,
