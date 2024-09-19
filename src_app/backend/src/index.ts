@@ -22,7 +22,7 @@ const appRouter = router({
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:3000', // Aggiungi il tuo frontend URL qui
+  origin: 'http://localhost:3001', // Aggiungi il tuo frontend URL qui
   credentials: true, // Assicurati che i cookie possano essere inviati
 }));
 

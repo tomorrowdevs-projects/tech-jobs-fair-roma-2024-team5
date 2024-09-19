@@ -1,14 +1,26 @@
 import { Link } from "react-router-dom";
+import "./Header.css";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 export default function Header() {
+  const {logout} = useContext(AuthContext);
+
   return (
     <header className="d-flex main-header mb-5 shadow-sm">
       <div className="container">
         <nav className="navbar navbar-expand-lg bg-white">
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav w-100">
               <li className="nav-item">
-                <Link className="nav-link" to='/notifications'>Notifiche</Link>
+                <Link className="nav-link" to="/notifications">
+                  Notifiche
+                </Link>
+              </li>
+              <li className="nav-item ms-auto">
+                <button className="nav-link logout-button" onClick={logout}>
+                  Logout
+                </button>
               </li>
             </ul>
           </div>

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { trpc } from "../lib/trpc";
-import Progress from "../components/Progress/Progress";
 import HabitCard from "../components/HabitCard/HabitCard";
 import { Link } from "react-router-dom";
-import Button from "../components/Button/Button";
+import "./Dashboard.css";
 
 export default function Dashboard() {
-  /**@type {[Awaited<ReturnType<typeof trpc.habit.find.query>>, any]} */
   const [habits, setHabits] = useState([]);
 
   useEffect(() => {
@@ -22,11 +20,11 @@ export default function Dashboard() {
     }
   };
 
-  const onAddCompletion = (habit, value) => {
+  const onUpdateProgress = (habit, value) => {
     const habitStatistics = habits.find((h) => h.id === habit.id)
       .habitStatistics[0];
 
-    habitStatistics.streak += value;
+    habitStatistics.streak = Math.max(value, 0);
     habitStatistics.completionRate =
       habitStatistics.streak / Math.max(habit.targetValue);
 
@@ -38,27 +36,30 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="p-4 container">
-      <div className="mb-4">
-        <Button href="/habits/create">Aggiungi Abitudine</Button>
-      </div>
-      <div className="row g-3">
+    <div className="dashboard-container container">
+      <h1 className="dashboard-title">Le tue abitudini</h1>
+      <Link to="/habits/create" className="add-habit-button">
+        Aggiungi Abitudine
+      </Link>
+      <div className="habits-grid">
         {habits.map((habit) => {
           if (!habit.habitStatistics.length) {
-            return <></>;
+            return null;
           }
 
           return (
-            <div key={habit.id} className="col-12">
-              <HabitCard
-                onAddCompletion={onAddCompletion}
-                onDelete={onDelete}
-                habit={habit}
-              ></HabitCard>
-            </div>
+            <HabitCard
+              key={habit.id}
+              onUpdateProgress={onUpdateProgress}
+              onDelete={onDelete}
+              habit={habit}
+            />
           );
         })}
       </div>
+      {habits.length === 0 && (
+        <p className="no-habits-message">Non hai ancora aggiunto abitudini. Inizia ora!</p>
+      )}
     </div>
   );
 }

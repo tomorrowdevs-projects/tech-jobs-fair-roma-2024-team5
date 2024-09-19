@@ -1,0 +1,122 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  .login-form {
+    background: #f0f0f0;
+    border-radius: 20px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff;
+  }
+  
+  .login-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 24px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .login-input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #e0e0e0;
+    box-shadow: inset 2px 2px 5px #b8b8b8, inset -2px -2px 5px #ffffff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .login-input:focus {
+    outline: none;
+    box-shadow: inset 4px 4px 8px #b8b8b8, inset -4px -4px 8px #ffffff;
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #4cadfd;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 6px #b8b8b8, -3px -3px 6px #ffffff;
+  }
+  
+  .login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 8px #b8b8b8, -4px -4px 8px #ffffff;
+  }
+  
+  .login-links {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .forgot-password {
+    color: #4cadfd;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .register-link {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .register-button {
+    background: none;
+    border: none;
+    color: #4cadfd;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0;
+    margin-left: 5px;
+  }
+  
+  .success-banner {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  @media (max-width: 768px) {
+    .login-form {
+      padding: 20px;
+    }
+  
+    .login-title {
+      font-size: 20px;
+    }
+  
+    .login-input, .login-button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }

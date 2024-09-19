@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { trpc } from "../../lib/trpc";
+import { useNavigate } from "react-router-dom";
+import "./Register.css";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -31,6 +34,9 @@ const Register = () => {
         password: formData.password,
       });
 
+      // Reindirizza alla pagina di login con un parametro di successo
+      navigate('/auth/login?registered=true');
+
       setSuccess(true); // Imposta il successo
       setError(null); // Resetta gli errori
 
@@ -48,68 +54,78 @@ const Register = () => {
   };
 
   return (
-    <div className="container mt-5 card p-3 text-center custom_card allinea_div">
-      <h2 className="text-2xl font-bold mb-4">Registrazione</h2>
+    <div className="register-container">
+      <form onSubmit={handleSubmit} className="register-form">
+        <h2 className="register-title">Registrazione</h2>
 
-      {/* Mostra eventuali messaggi di errore */}
-      {error && <p className="text-red-500">{error}</p>}
+        {/* Mostra eventuali messaggi di errore */}
+        {error && <p className="error-message">{error}</p>}
 
-      {/* Mostra il messaggio di successo */}
-      {success && (
-        <p className="text-green-500">Registrazione avvenuta con successo!</p>
-      )}
+        {/* Mostra il messaggio di successo */}
+        {success && (
+          <p className="success-message">Registrazione avvenuta con successo!</p>
+        )}
 
-      <div className="allinea_div">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="mb-3">
-            <input
-              type="text"
-              name="username"
-              placeholder="Nome utente"
-              value={formData.username}
-              onChange={handleChange}
-              required
-              className="form-control"
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Conferma Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <button type="submit" className="btn btn-primary custom-button">
-            Registrati
-          </button>
-        </form>
-      </div>
+        <div className="form-group">
+          <label htmlFor="username">Nome utente</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Inserisci il tuo nome utente"
+            value={formData.username}
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Inserisci la tua email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Inserisci la tua password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="confirmPassword">Conferma Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Conferma la tua password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
+        </div>
+
+        <button type="submit" className="register-button">
+          Registrati
+        </button>
+      </form>
     </div>
   );
 };
