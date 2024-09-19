@@ -86,3 +86,15 @@ code {
   line-height: 30px;
   font-weight: bold; /* Rende il testo in grassetto */
 }
+
+/* Chrome, Safari, Edge, Opera */
+input.input-no-arrows::-webkit-outer-spin-button,
+input.input-no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input.input-no-arrows[type=number] {
+  -moz-appearance: textfield;
+}

@@ -15,7 +15,7 @@ export default function Progress({ value, total, current }) {
       <div className="bg-light rounded-pill overflow-hidden bar">
         <div
           style={{ width: `${percentage}%` }}
-          className="bg-success h-100"
+          className="bg-success h-100 progress"
         ></div>
       </div>
     </div>

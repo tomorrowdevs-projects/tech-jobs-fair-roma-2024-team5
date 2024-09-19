@@ -1,6 +1,9 @@
 .progress-bar .bar {
   height: 4px;
 }
+.progress-bar .progress {
+transition: width .3s ease-in-out;
+}
 .progress-bar .percentages {
   font-size: .5rem;
 }

@@ -20,11 +20,11 @@ export default function Dashboard() {
     }
   };
 
-  const onAddCompletion = (habit, value) => {
+  const onUpdateProgress = (habit, value) => {
     const habitStatistics = habits.find((h) => h.id === habit.id)
       .habitStatistics[0];
 
-    habitStatistics.streak += value;
+    habitStatistics.streak = Math.max(value, 0);
     habitStatistics.completionRate =
       habitStatistics.streak / Math.max(habit.targetValue);
 
@@ -50,7 +50,7 @@ export default function Dashboard() {
           return (
             <HabitCard
               key={habit.id}
-              onAddCompletion={onAddCompletion}
+              onUpdateProgress={onUpdateProgress}
               onDelete={onDelete}
               habit={habit}
             />

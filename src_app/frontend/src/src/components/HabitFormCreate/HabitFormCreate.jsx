@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { trpc } from "../../lib/trpc";
 import { useNavigate } from "react-router-dom";
+import {startOfDay} from 'date-fns'
 import "./HabitFormCreate.css";
 
 export default function HabitFormCreate() {
@@ -33,7 +34,7 @@ export default function HabitFormCreate() {
             break;
           case "startDate":
             const startDate = new Date(value);
-            if (startDate < today) {
+            if (startDate < startOfDay(today) ) {
               validation[fieldName] = "La data di inizio non può essere nel passato";
             }
             break;
@@ -50,6 +51,7 @@ export default function HabitFormCreate() {
               validation[fieldName] = "L'obiettivo deve essere un numero positivo non superiore a 999999";
             }
             break;
+          default:
         }
       }
     }
