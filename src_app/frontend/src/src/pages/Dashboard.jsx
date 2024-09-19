@@ -3,9 +3,10 @@ import { trpc } from "../lib/trpc";
 import HabitCard from "../components/HabitCard/HabitCard";
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
+import Spinner from "../components/Spinner/Spinner";
 
 export default function Dashboard() {
-  const [habits, setHabits] = useState([]);
+  const [habits, setHabits] = useState();
 
   useEffect(() => {
     fetchHabits();
@@ -41,8 +42,11 @@ export default function Dashboard() {
       <Link to="/habits/create" className="add-habit-button">
         Aggiungi Abitudine
       </Link>
+        {!habits && <div className="d-flex justify-content-center w-100 mx-auto" style={{maxWidth: 200}}>
+          <Spinner></Spinner>
+          </div>}
       <div className="habits-grid">
-        {habits.map((habit) => {
+        {!!habits && habits.map((habit) => {
           if (!habit.habitStatistics.length) {
             return null;
           }
@@ -57,7 +61,7 @@ export default function Dashboard() {
           );
         })}
       </div>
-      {habits.length === 0 && (
+      {!!habits && habits.length === 0 && (
         <p className="no-habits-message">Non hai ancora aggiunto abitudini. Inizia ora!</p>
       )}
     </div>
