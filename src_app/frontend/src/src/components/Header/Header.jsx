@@ -14,8 +14,9 @@ export default function Header() {
           <ul className="navbar-nav w-100 d-flex flex-row align-items-center">
             <li className="nav-item notification-item position-relative">
               <Link 
-                className={`nav-link btn ${notificationCount > 0 ? 'btn-primary fw-bold' : 'btn-light'} text-dark`} 
+                className={`nav-link btn ${notificationCount > 0 ? 'btn-primary fw-bold' : 'btn-light'} text-dark notification-button` } 
                 to="/notifications"
+                id="notification-button"
               >
                 Notifiche
                 {notificationCount > 0 && (

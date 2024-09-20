@@ -16,20 +16,16 @@ export default function Dashboard() {
     try {
       const allHabits = await trpc.habit.find.query({ active: false });
       setHabits(allHabits);
-      console.log(allHabits);
     } catch (ex) {
       console.error(ex);
     }
   };
 
   const onUpdateProgress = (habit, value) => {
-    const habitStatistics = habits.find((h) => h.id === habit.id)
-      .habitStatistics[0];
-
-    habitStatistics.streak = Math.max(value, 0);
-    habitStatistics.completionRate =
-      habitStatistics.streak / Math.max(habit.targetValue);
-    console.log(habits);
+    habit.progress = Math.max(value, 0);
+    const index = habits.findIndex(h => h.id === habit.id)
+    habits.splice(index, 1, habit)
+    
     setHabits([...habits]);
   };
 

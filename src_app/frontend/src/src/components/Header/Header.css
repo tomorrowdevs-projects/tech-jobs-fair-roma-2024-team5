@@ -19,3 +19,6 @@
 .btn-primary.text-dark:hover {
   color: white !important;
 }
+#notification-button.notification-button {
+  color: white !important;
+}
