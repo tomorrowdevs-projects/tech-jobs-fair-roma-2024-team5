@@ -28,6 +28,7 @@ export const habitRouter = router({
       return await prisma.habit.create({
         data: {
           ...input,
+          progress: 0,
           habitSchedule: {
             create: input.habitSchedule,
           },
@@ -71,7 +72,7 @@ export const habitRouter = router({
       });
 
       // value might be negative, avoid streak to go under 0
-      const streak = Math.max(input.value, 0)
+      const streak = Math.max(input.value, 0);
 
       if (!currentStatistics) {
         await prisma.habitStatistics.create({
@@ -93,7 +94,10 @@ export const habitRouter = router({
         });
       }
 
-      return await prisma.habitCompletion.create({ data: input });
+      return await prisma.habit.update({
+        data: { progress: streak },
+        where: { id: habitId },
+      });
     }),
 
   find: protectedProcedure
@@ -110,14 +114,14 @@ export const habitRouter = router({
         where: {
           name: { contains: input.name ?? "" },
           userId: ctx.userid as number,
-          ...(!input.active ? {} : {
-            startDate: {
-              lte: new Date()
-            },
-            endDate: {
-              gte: new Date()
-            }
-          })
+          // ...(!input.active ? {} : {
+          //   startDate: {
+          //     lte: new Date()
+          //   },
+          //   endDate: {
+          //     gte: new Date()
+          //   }
+          // })
         },
         include: {
           habitTags: true,

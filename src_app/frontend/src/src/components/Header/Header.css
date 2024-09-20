@@ -2,3 +2,23 @@
   box-shadow: none;
   margin-bottom: 0;
 }
+
+.btn-light:hover, .btn-primary:hover {
+  background-color: #0d6efd;
+  color: white !important;
+}
+
+.notification-item .badge {
+  font-size: 0.6em;
+}
+
+.btn-primary.text-dark {
+  background-color: #0d6efd;
+}
+
+.btn-primary.text-dark:hover {
+  color: white !important;
+}
+#notification-button.notification-button {
+  color: white !important;
+}

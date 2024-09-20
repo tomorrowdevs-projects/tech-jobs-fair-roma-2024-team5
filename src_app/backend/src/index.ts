@@ -50,9 +50,10 @@ app.listen(3001, () => {
   console.log('Server running on http://localhost:3001');
 });
 
-cron.schedule('* * * * *', () => {
+cron.schedule('0 8 * * *', () => {
   sendNotification()
 });
 
 export type AppRouter = typeof appRouter;
 export { appRouter }; // Esporti `appRouter` per usarlo in altri file
+  

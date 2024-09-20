@@ -120,3 +120,10 @@
       padding: 10px;
     }
   }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }

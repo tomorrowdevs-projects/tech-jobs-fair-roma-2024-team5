@@ -30,6 +30,7 @@ model Habit {
   startDate       DateTime?         @default(now()) @db.Date
   endDate         DateTime?         @db.Date
   targetValue     Int
+  progress        Int               @default(0)
   createdAt       DateTime          @default(now()) @db.Timestamptz()
   user            User              @relation(fields: [userId], references: [id])
   sharedHabits    SharedHabit[]

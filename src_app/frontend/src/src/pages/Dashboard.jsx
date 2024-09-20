@@ -22,13 +22,10 @@ export default function Dashboard() {
   };
 
   const onUpdateProgress = (habit, value) => {
-    const habitStatistics = habits.find((h) => h.id === habit.id)
-      .habitStatistics[0];
-
-    habitStatistics.streak = Math.max(value, 0);
-    habitStatistics.completionRate =
-      habitStatistics.streak / Math.max(habit.targetValue);
-
+    habit.progress = Math.max(value, 0);
+    const index = habits.findIndex(h => h.id === habit.id)
+    habits.splice(index, 1, habit)
+    
     setHabits([...habits]);
   };
 
@@ -50,7 +47,6 @@ export default function Dashboard() {
           if (!habit.habitStatistics.length) {
             return null;
           }
-
           return (
             <HabitCard
               key={habit.id}
